@@ -1,14 +1,16 @@
-module SingleCycleCore_tb();
+module PipelinedCore_tb();
 
 reg original_clk;
 reg rst;
 reg btn;
 wire [7:0] leds;
 
-SingleCycleCore U0(
+PipelinedCore PPCTB(
     .original_clk(original_clk),
     .rst(rst),
+`ifdef BUTTON
     .btn(btn),
+`endif
     .leds(leds)
 );
 

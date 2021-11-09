@@ -4,22 +4,22 @@ module MEMWBRegs(
     input en,
     input [31:0]    writeALUOutput,
     input [31:0]    writeDataOutput,
-    input [4:0]     writeWriteDir,
+    input [4:0]     writeRd,
     input           writeRegWrite,
-    input           writeMemToReg,
+    input           writeMemtoReg,
     output [31:0]    readALUOutput,
     output [31:0]    readDataOutput,
-    output [4:0]     readWriteDir,
+    output [4:0]     readRd,
     output           readRegWrite,
-    output           readMemToReg
+    output           readMemtoReg
 );
 
 //Datapath
 reg [31:0]  regALUOutput;
 reg [31:0]  regDataOutput;
-reg [4:0]   regWriteDir;
+reg [4:0]   regRd;
 reg         regRegWrite;
-reg         regMemToReg;
+reg         regMemtoReg;
 
 
 always @(posedge clk) begin : WriteRegs
@@ -27,24 +27,24 @@ always @(posedge clk) begin : WriteRegs
         if (en == 1) begin
             regALUOutput <= writeALUOutput;
             regDataOutput <= writeDataOutput;
-            regWriteDir <= writeWriteDir;
+            regRd <= writeRd;
             regRegWrite <= writeRegWrite;
-            regMemToReg <= writeMemToReg;
+            regMemtoReg <= writeMemtoReg;
         end
     end else begin
         regALUOutput <= 0;
         regDataOutput <= 0;
-        regWriteDir <= 0;
+        regRd <= 0;
         regRegWrite <= 0;
-        regMemToReg <= 0;
+        regMemtoReg <= 0;
 
     end
 end
 
 assign readALUOutput = regALUOutput;
 assign readDataOutput = regDataOutput;
-assign readWriteDir = regWriteDir;
+assign readRd = regRd;
 assign readRegWrite = regRegWrite;
-assign readMemToReg = regMemToReg;
+assign readMemtoReg = regMemtoReg;
 
 endmodule

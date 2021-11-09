@@ -4,50 +4,51 @@ module IDEXRegs(
     input en,
     //Inputs
     input [31:0]    writePC,     //32 or 64 bits
-    input [31:0]    writeRS1,
-    input [31:0]    writeRS2,
+    input [31:0]    writeReadData1,
+    input [31:0]    writeReadData2,
     input [31:0]    writeImmediate,
     input [31:0]    writeInstruction,
-    input [4:0]     writeWriteDir,
+    input [4:0]     writeRs1,
+    input [4:0]     writeRs2,
+    input [4:0]     writeRd,
     input           writeRegWrite,
-    input           writeMemToReg,
+    input           writeMemtoReg,
     input           writeBranch,
     input           writeMemWrite,
     input           writeMemRead,
     input           writeALUSrc,
     input [4:0]     writeALUCtrl,
-    input [4:0]     writeReadDir1,
-    input [4:0]     writeReadDir2,
+    
     //Outputs
     output [31:0]   readPC,     //32 or 64 bits
-    output [31:0]   readRS1,
-    output [31:0]   readRS2,
+    output [31:0]   readReadData1,
+    output [31:0]   readReadData2,
     output [31:0]   readImmediate,
     output [31:0]   readInstruction,
-    output [4:0]    readWriteDir,
+    output [4:0]    readRs1,
+    output [4:0]    readRs2,
+    output [4:0]    readRd,
     output          readRegWrite,
-    output          readMemToReg,
+    output          readMemtoReg,
     output          readBranch,
     output          readMemWrite,
     output          readMemRead,
     output          readALUSrc,
-    output [4:0]    readALUCtrl,
-    output [4:0]    readReadDir1,
-    output [4:0]    readReadDir2
+    output [4:0]    readALUCtrl
 );
 
 // Datapath
 reg [31:0]  regPC;
-reg [31:0]  regRS1;
-reg [31:0]  regRS2;
+reg [31:0]  regReadData1;
+reg [31:0]  regReadData2;
 reg [31:0]  regImmediate;
 reg [31:0]  regInstruction;
-reg [4:0]   regWriteDir;
+reg [4:0]   regRd;
 
 // Control
 //To WB
 reg regRegWrite;
-reg regMemToReg;
+reg regMemtoReg;
 //To MEM
 reg regBranch;
 reg regMemWrite;
@@ -57,62 +58,62 @@ reg regALUSrc;
 reg [4:0] regALUCtrl;
 
 // Forwarding
-reg [4:0]   regReadDir1;
-reg [4:0]   regReadDir2;
+reg [4:0]   regRs1;
+reg [4:0]   regRs2;
 
 always @(posedge clk) begin : WriteRegs
     if (rst == 0) begin
         if (en == 1) begin
             regPC <= writePC;
-            regRS1 <= writeRS1;
-            regRS2 <= writeRS2;
+            regReadData1 <= writeReadData1;
+            regReadData2 <= writeReadData2;
             regImmediate <= writeImmediate;
             regInstruction <= writeInstruction;
-            regWriteDir <= writeWriteDir;
+            regRd <= writeRd;
             regRegWrite <= writeRegWrite;
-            regMemToReg <= writeMemToReg;
+            regMemtoReg <= writeMemtoReg;
             regBranch <= writeBranch;
             regMemWrite <= writeMemWrite;
             regMemRead <= writeMemRead;
             regALUSrc <= writeALUSrc;
             regALUCtrl <= writeALUCtrl;
-            regReadDir1 <= writeReadDir1;
-            regReadDir2 <= writeReadDir2;
+            regRs1 <= writeRs1;
+            regRs2 <= writeRs2;
         end
     end else begin
         regPC <= 0;
-        regRS1 <= 0;
-        regRS2 <= 0;
+        regReadData1 <= 0;
+        regReadData2 <= 0;
         regImmediate <= 0;
         regInstruction <= 0;
-        regWriteDir <= 0;
+        regRd <= 0;
         regRegWrite <= 0;
-        regMemToReg <= 0;
+        regMemtoReg <= 0;
         regBranch <= 0;
         regMemWrite <= 0;
         regMemRead <= 0;
         regALUSrc <= 0;
         regALUCtrl <= 0;
-        regReadDir1 <= 0;
-        regReadDir2 <= 0;
+        regRs1 <= 0;
+        regRs2 <= 0;
     end
 end
 
 assign readPC = regPC;
-assign readRS1 = regRS1;
-assign readRS2 = regRS2;
+assign readReadData1 = regReadData1;
+assign readReadData2 = regReadData2;
 assign readImmediate = regImmediate;
 assign readInstruction = regInstruction;
-assign readWriteDir = regWriteDir;
+assign readRd = regRd;
 assign readRegWrite = regRegWrite;
-assign readMemToReg = regMemToReg;
+assign readMemtoReg = regMemtoReg;
 assign readBranch = regBranch;
 assign readMemWrite = regMemWrite;
 assign readMemRead = regMemRead;
 assign readALUSrc = regALUSrc;
 assign readALUCtrl = regALUCtrl;
-assign readReadDir1 = regReadDir1;
-assign readReadDir2 = regReadDir2;
+assign readRs1 = regRs1;
+assign readRs2 = regRs2;
 
 
 
