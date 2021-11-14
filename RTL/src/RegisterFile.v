@@ -2,11 +2,11 @@
 module RegisterFile(
     input           clk,
     input           rst,    //! High level asynchronous reset as its better to simulate with debouncer
-    input [4:0]     WriteDir,
+    input [4:0]     Rd,
     input           WriteEn,
     input [31:0]    WriteData,
-    input [4:0]     ReadDir1,
-    input [4:0]     ReadDir2,
+    input [4:0]     Rs1,
+    input [4:0]     Rs2,
     output [31:0]    ReadData1,
     output [31:0]    ReadData2
     
@@ -15,13 +15,18 @@ module RegisterFile(
 
 reg [31:0]  bank [31:0];    //! Internal memory state of the registers
 integer i;  //! Index to reset *multidimensional* bank
+integer idx;
+initial begin
+    $dumpfile("PipelinedCore_tb.vcd");
+    for (idx = 0; idx < 32; idx = idx + 1) $dumpvars(0, bank[idx]);
+end
 
 //! Write the register bank (except zero) if enabled
-always @(posedge clk) begin : WriteBank
+always @(negedge clk) begin : WriteBank
     if (rst == 0) begin
         if (WriteEn == 1) begin
-            if(WriteDir != 0)begin
-                bank[WriteDir] <= WriteData;
+            if(Rd != 0)begin
+                bank[Rd] <= WriteData;
             end 
         end
     end else begin
@@ -31,9 +36,12 @@ always @(posedge clk) begin : WriteBank
         end
     end
 end
-
+// always @(negedge clk) begin : ReadBank
+//     ReadData1 <= bank[Rs1];
+//     ReadData2 <= bank[Rs2];
+// end
 //! Read the register bank
-assign ReadData1 = bank[ReadDir1];
-assign ReadData2 = bank[ReadDir2];
+assign ReadData1 = bank[Rs1];
+assign ReadData2 = bank[Rs2];
 
 endmodule

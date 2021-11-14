@@ -1,0 +1,105 @@
+[*]
+[*] GTKWave Analyzer v3.4.0 (w)1999-2022 BSI
+[*] Fri Nov 12 19:07:36 2021
+[*]
+[dumpfile] "/home/adrian/codigo/RISC-V/PipelinedCoreRISCV/RTL/sim/icarus/PipelinedCore_tb.vcd"
+[dumpfile_mtime] "Fri Nov 12 18:52:40 2021"
+[dumpfile_size] 44978
+[savefile] "/home/adrian/codigo/RISC-V/PipelinedCoreRISCV/RTL/sim/icarus/signals.gtkw"
+[timestart] 0
+[size] 1920 1001
+[pos] 1893 -1
+*-2.888727 33 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] PipelinedCore_tb.
+[treeopen] PipelinedCore_tb.PPCTB.
+[sst_width] 276
+[signals_width] 328
+[sst_expanded] 1
+[sst_vpaned_height] 438
+@28
+PipelinedCore_tb.original_clk
+PipelinedCore_tb.PPCTB.rst
+@22
+PipelinedCore_tb.PPCTB.leds[7:0]
+PipelinedCore_tb.PPCTB.PCNext[31:0]
+PipelinedCore_tb.PPCTB.PC[31:0]
+PipelinedCore_tb.PPCTB.Instruction[31:0]
+PipelinedCore_tb.PPCTB.IDInstruction[31:0]
+PipelinedCore_tb.PPCTB.EXInstruction[31:0]
+PipelinedCore_tb.PPCTB.MEMInstruction[31:0]
+PipelinedCore_tb.PPCTB.WBInstruction[31:0]
+@28
+PipelinedCore_tb.PPCTB.Stall
+PipelinedCore_tb.PPCTB.IFIDFlush
+@24
+PipelinedCore_tb.PPCTB.Rs1[4:0]
+PipelinedCore_tb.PPCTB.Rs2[4:0]
+@22
+PipelinedCore_tb.PPCTB.ReadData1[31:0]
+PipelinedCore_tb.PPCTB.ReadData2[31:0]
+PipelinedCore_tb.PPCTB.EXRs1[4:0]
+PipelinedCore_tb.PPCTB.EXRs2[4:0]
+PipelinedCore_tb.PPCTB.EXReadData1[31:0]
+PipelinedCore_tb.PPCTB.EXReadData2[31:0]
+PipelinedCore_tb.PPCTB.MEMALUOutput[31:0]
+PipelinedCore_tb.PPCTB.DataOutput[31:0]
+PipelinedCore_tb.PPCTB.WBDataOutput[31:0]
+PipelinedCore_tb.PPCTB.WriteData[31:0]
+PipelinedCore_tb.PPCTB.Rd[4:0]
+@24
+PipelinedCore_tb.PPCTB.WBRd[4:0]
+@22
+PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[4][31:0]
+PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[10][31:0]
+PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[11][31:0]
+@c00022
+PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[12][31:0]
+@28
+(0)PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[12][31:0]
+(1)PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[12][31:0]
+(2)PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[12][31:0]
+(3)PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[12][31:0]
+(4)PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[12][31:0]
+(5)PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[12][31:0]
+(6)PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[12][31:0]
+(7)PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[12][31:0]
+(8)PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[12][31:0]
+(9)PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[12][31:0]
+(10)PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[12][31:0]
+(11)PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[12][31:0]
+(12)PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[12][31:0]
+(13)PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[12][31:0]
+(14)PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[12][31:0]
+(15)PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[12][31:0]
+(16)PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[12][31:0]
+(17)PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[12][31:0]
+(18)PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[12][31:0]
+(19)PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[12][31:0]
+(20)PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[12][31:0]
+(21)PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[12][31:0]
+(22)PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[12][31:0]
+(23)PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[12][31:0]
+(24)PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[12][31:0]
+(25)PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[12][31:0]
+(26)PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[12][31:0]
+(27)PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[12][31:0]
+(28)PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[12][31:0]
+(29)PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[12][31:0]
+(30)PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[12][31:0]
+(31)PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[12][31:0]
+@1401200
+-group_end
+@28
+PipelinedCore_tb.PPCTB.MemtoReg
+PipelinedCore_tb.PPCTB.RegWrite
+@22
+PipelinedCore_tb.PPCTB.DataMemoryPPC.\ram[1][31:0]
+@29
+PipelinedCore_tb.PPCTB.ALUSrc
+@28
+PipelinedCore_tb.PPCTB.ForwardALUB[1:0]
+@22
+PipelinedCore_tb.PPCTB.ALUB[31:0]
+PipelinedCore_tb.PPCTB.MEMALUB[31:0]
+[pattern_trace] 1
+[pattern_trace] 0

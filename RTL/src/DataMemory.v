@@ -14,16 +14,27 @@ module DataMemory #(
   //reg [ADDR_WIDTH-1:0] addr_r;
 
   //Initializa RAM
+  integer idx;
   initial begin
-    $readmemh("/home/adrian/codigo/RISC-V/SingleCycleCoreRISCV/RTL/src/datamemoryverilog.txt", ram);
+    $readmemh("/home/adrian/codigo/RISC-V/PipelinedCoreRISCV/RTL/src/datamemoryverilog.txt", ram);
+    $dumpfile("PipelinedCore_tb.vcd");
+    for (idx = 0; idx < 10; idx = idx + 1) $dumpvars(0, ram[idx]);
   end
 
-  always @(posedge clk) begin //WRITE
+  always @(negedge clk) begin //WRITE
       if (we) begin
           ram[addr] <= data_in;
       end
       //addr_r <= addr;
   end
+
+  // always @(negedge clk) begin
+  //     if (re) begin
+  //       data_out <= ram[addr];
+  //     end else begin
+  //       data_out <= 0;
+  //     end
+  // end
 
   assign data_out = re ? ram[addr] : 0; //READ
 

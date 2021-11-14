@@ -1,6 +1,7 @@
 `include "TextMemory.v"
 `include "MainControl.v"
 `include "RegisterFile.v"
+`include "BranchALU.v"
 `include "ImmGen.v"
 `include "HazardDetection.v"
 `include "Forwarding.v"
@@ -10,6 +11,7 @@
 `include "IDEXRegs.v"
 `include "EXMEMRegs.v"
 `include "MEMWBRegs.v"
+//-I/home/adrian/codigo/RISC-V/PipelinedCoreRISCV/RTL/src
 
 //`define BUTTON = 1
 //`define SLOWCLK = 1
@@ -35,9 +37,9 @@ module PipelinedCore(
 wire clk;
 
 `ifdef BUTTON
-    Debouncer DebouncerSSC(.clk(original_clk), .btn(btn), .btn_out(clk));
+    Debouncer DebouncerPPC(.clk(original_clk), .btn(btn), .btn_out(clk));
 `elsif SLOWCLK
-     SlowClock SlowClockSCC(.clk(original_clk), .slow_clk(clk));
+     SlowClock SlowClockPPC(.clk(original_clk), .slow_clk(clk));
 `else
     assign clk = original_clk;
 `endif
@@ -69,23 +71,34 @@ wire [4:0]  EXRs1;
 wire [4:0]  EXRs2;
 wire [4:0]  EXRd;
 wire [31:0] ALUA;
+wire [31:0] EXReadData2Forw;
 wire [31:0] ALUB;
 wire [31:0] ALUOutput;      //! ALU output for a given operation.
 //wire        ALUBranch;    //Not used, replaced by BranchALUOutput of BranchALU Unit  //! Direct 0 result from ALU.
+//DEBUG
+`ifdef DEBUGINSTRUCTION
+    wire [31:0] EXInstruction;
+`endif
 
 
 // --- MEM stage
 wire [31:0] MEMALUOutput;
-wire [31:0] MEMReadData2;
-wire [31:0] MEMWriteData;   //(Coming directly from the ALU, ignores DATAMEMORY)
+wire [31:0] MEMALUB;
+wire [31:0] MEMWriteData;   // == MEMALUOutput (WriteData but coming directly from the ALU (MEM), ignores DATAMEMORY) =
 wire [4:0] MEMRd;
 wire [31:0] DataOutput;     //! Data Memory output.
+`ifdef DEBUGINSTRUCTION
+    wire [31:0] MEMInstruction;
+`endif
 
 // --- WB stage
 wire [31:0] WBALUOutput;
 wire [31:0] WBDataOutput;
 wire [31:0] WriteData;
 wire [4:0] WBRd;
+`ifdef DEBUGINSTRUCTION
+    wire [31:0] WBInstruction;
+`endif
 
 
 // ----- CONTROL WIRES -----
@@ -169,7 +182,7 @@ assign PCNext = (PCSrc) ? PCBranch : PCPlus4;
 
 // TEXT MEMORY
 //#(.ADDR_WIDTH(8)) 
-TextMemory TextMemorySCC(
+TextMemory TextMemoryPPC(
     .addr(PC[9:2]), 
     .data_out(Instruction)
 );
@@ -189,7 +202,7 @@ IFIDRegs IFIDRegsPPC(
 
 assign Rs1 = IDInstruction[19:15];
 assign Rs2 = IDInstruction[24:20];
-assign Rd = Instruction[11:7]; 
+assign Rd = IDInstruction[11:7]; 
 
 MainControl MainControlPPC(
     .Instruction(IDInstruction), 
@@ -209,16 +222,16 @@ assign PCBranch = IDPC + Immediate;
 RegisterFile RegisterFilePPC(
     .clk(clk), 
     .rst(rst), 
-    .WriteDir(IDInstruction[11:7]), 
+    .Rd(WBRd), 
     .WriteEn(RegWrite), 
     .WriteData(WriteData), 
-    .ReadDir1(Rs1), 
-    .ReadDir2(Rs2), 
+    .Rs1(Rs1), 
+    .Rs2(Rs2), 
     .ReadData1(ReadData1), 
     .ReadData2(ReadData2)
 );
 
-ImmGen ImmGenSCC(
+ImmGen ImmGenPPC(
     .Instruction(IDInstruction), 
     .Immediate(Immediate)
 );
@@ -243,12 +256,11 @@ Forwarding ForwardingToBranchALUPPC(
     .WBRd(WBRd),
     .RegWriteMEM(RegWriteMEM),
     .RegWrite(RegWrite),
-    .ALUSrc(ALUSrc),
     .ForwardA(ForwardBranchA),
     .ForwardB(ForwardBranchB)
 );
 assign BranchA = ForwardBranchA[1] ? (ForwardBranchA[0] ? 0 : WriteData) : (ForwardBranchA[0] ? MEMWriteData : ReadData1);
-assign BranchB = ForwardBranchB[1] ? (ForwardBranchB[0] ? 0 : WriteData) : (ForwardBranchA[0] ? MEMWriteData : ReadData2);
+assign BranchB = ForwardBranchB[1] ? (ForwardBranchB[0] ? 0 : WriteData) : (ForwardBranchB[0] ? MEMWriteData : ReadData2);
 
 BranchALU BranchALUPPC(
     .a(BranchA),
@@ -262,13 +274,12 @@ assign PCSrc = BranchALUOutput & BranchID;
 IDEXRegs IDEXRegsPPC(
     .clk(clk),
     .rst(rst),
-    .en(1),
-    //Inputs
+    .en(1'b1),
+    //INPUTS
     //.writePC(PC), Not used, moved to ID Stage
     .writeReadData1(ReadData1),
     .writeReadData2(ReadData2),
     .writeImmediate(Immediate),
-    //.writeInstruction(IDInstruction),  //Not used
     .writeRs1(Rs1),
     .writeRs2(Rs2),
     .writeRd(Rd),
@@ -279,12 +290,16 @@ IDEXRegs IDEXRegsPPC(
     .writeMemRead(MemReadID),
     .writeALUSrc(ALUSrcID),
     .writeALUCtrl(ALUCtrlID),
-    //Outputs
+    //DEBUG
+    `ifdef DEBUGINSTRUCTION
+        .writeInstruction(IDInstruction),
+        .readInstruction(EXInstruction),
+    `endif
+    //OUTPUTS
     //.readPC(),
     .readReadData1(EXReadData1),
     .readReadData2(EXReadData2),
     .readImmediate(EXImmediate),
-    //.readInstruction(),
     .readRs1(EXRs1),
     .readRs2(EXRs2),
     .readRd(EXRd),
@@ -313,34 +328,38 @@ Forwarding ForwardingToALUPPC(
     .WBRd(WBRd),
     .RegWriteMEM(RegWriteMEM),
     .RegWrite(RegWrite),
-    .ALUSrc(ALUSrc),
     .ForwardA(ForwardALUA),
     .ForwardB(ForwardALUB)
 );
 assign ALUA = ForwardALUA[1] ? (ForwardALUA[0] ? 0 : WriteData) : (ForwardALUA[0] ? MEMWriteData : EXReadData1);
-assign ALUB = ForwardALUB[1] ? (ForwardALUB[0] ? EXImmediate : WriteData) : (ForwardALUA[0] ? MEMWriteData : EXReadData2);
+assign EXReadData2Forw = ForwardALUB[1] ? (ForwardALUB[0] ? 0 : WriteData) : (ForwardALUB[0] ? MEMWriteData : EXReadData2);
+assign ALUB = ALUSrc ? EXImmediate : EXReadData2Forw;
 
 EXMEMRegs EXMEMRegsPPC(
     .clk(clk),
     .rst(rst),
-    .en(1),
-    //Inputs
+    .en(1'b1),
+    //INPUTS
     //.writePCBranch(), //Not used
     //.writeZero(), //Not used
     .writeALUOutput(ALUOutput),
-    .writeReadData2(EXReadData2),
+    .writeReadData2Forw(EXReadData2Forw),
     .writeRd(EXRd),
     .writeRegWrite(RegWriteEX),
     .writeMemtoReg(MemtoRegEX),
     //.writeBranch(BranchEX),       //Branch not delayed more than BranchID
     .writeMemWrite(MemWriteEX),
     .writeMemRead(MemReadEX),
-
-    //Outputs
+    //DEBUG
+    `ifdef DEBUGINSTRUCTION
+        .writeInstruction(EXInstruction),
+        .readInstruction(MEMInstruction),
+    `endif
+    //OUTPUTS
     //.readPCBranch(),
     //.readZero(),
     .readALUOutput(MEMALUOutput),
-    .readReadData2(MEMReadData2),
+    .readReadData2Forw(MEMALUB),
     .readRd(MEMRd),
     .readRegWrite(RegWriteMEM),
     .readMemtoReg(MemtoRegMEM),
@@ -352,9 +371,9 @@ EXMEMRegs EXMEMRegsPPC(
 //  ----- PIPELINE MEM -----
 assign MEMWriteData = MEMALUOutput; //For forwarding, MEMWriteData corresponds to ALUOutput in the MEM stage. 
 
-DataMemory DataMemorySCC(
+DataMemory DataMemoryPPC(
     .clk(clk),
-    .data_in(MEMReadData2),
+    .data_in(MEMALUB),
     .addr(MEMALUOutput[5:2]),
     .we(MemWrite),
     .re(MemRead),
@@ -364,14 +383,19 @@ DataMemory DataMemorySCC(
 MEMWBRegs MEMWBRegsPPC(
     .clk(clk),
     .rst(rst),
-    .en(1),
-    //Inputs
+    .en(1'b1),
+    //INPUTS
     .writeALUOutput(MEMALUOutput),
     .writeDataOutput(DataOutput),
     .writeRd(MEMRd),
     .writeRegWrite(RegWriteMEM),
     .writeMemtoReg(MemtoRegMEM),
-    //Outputs
+    //DEBUG
+    `ifdef DEBUGINSTRUCTION
+        .writeInstruction(MEMInstruction),
+        .readInstruction(WBInstruction),
+    `endif
+    //OUTPUTS
     .readALUOutput(WBALUOutput),
     .readDataOutput(WBDataOutput),
     .readRd(WBRd),

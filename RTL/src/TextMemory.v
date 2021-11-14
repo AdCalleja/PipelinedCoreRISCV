@@ -14,7 +14,7 @@ begin
     case(addr)
         0: data_out = 32'h00052503;
         1: data_out = 32'h0045a583;
-        2: data_out = 32'h00a58633;
+        2: data_out = 32'h00b50633;
         3: data_out = 32'h00c2a223;
         4: data_out = 32'h02b60063;
         5: data_out = 32'h40b606b3;

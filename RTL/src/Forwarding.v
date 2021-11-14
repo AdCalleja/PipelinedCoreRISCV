@@ -5,13 +5,12 @@ module Forwarding(
     input [4:0]     WBRd,
     input           RegWriteMEM,
     input           RegWrite,
-    input           ALUSrc,
     output reg [1:0] ForwardA,
     output reg [1:0] ForwardB
 );
 always@(*) begin : ForwardingComb
 
-    // ALU INPUT A
+    // INPUT A
     if (RegWriteMEM && (MEMRd != 0) && (MEMRd == Rs1) && (MEMRd == Rs1))begin
         //EX Hazard
         ForwardA = 2'b01;
@@ -23,22 +22,18 @@ always@(*) begin : ForwardingComb
         ForwardA = 2'b00;
     end
     
-    // ALU INPUT B
-    if(ALUSrc == 0)begin
-        if (RegWriteMEM && (MEMRd != 0) && (MEMRd == Rs2) && (MEMRd == Rs2))begin
-            //EX Hazard
-            ForwardB = 2'b01;
-        end else if (RegWrite && (WBRd != 0) && (WBRd == Rs2) && (WBRd == Rs2))begin
-            //MEM Hazard
-            ForwardB = 2'b10;
-        end else begin
-            //RegFile 
-            ForwardB = 2'b00;
-        end
+    // INPUT B
+    if (RegWriteMEM && (MEMRd != 0) && (MEMRd == Rs2) && (MEMRd == Rs2))begin
+        //EX Hazard
+        ForwardB = 2'b01;
+    end else if (RegWrite && (WBRd != 0) && (WBRd == Rs2) && (WBRd == Rs2))begin
+        //MEM Hazard
+        ForwardB = 2'b10;
     end else begin
-        //Immediate
-        ForwardB = 2'b11;
+        //RegFile 
+        ForwardB = 2'b00;
     end
+    
     
 end
 endmodule
