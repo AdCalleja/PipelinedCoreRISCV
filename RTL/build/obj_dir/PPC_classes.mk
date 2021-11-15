@@ -32,6 +32,7 @@ VM_CLASSES_FAST += \
 VM_CLASSES_SLOW += \
 	PPC__ConstPool_0 \
 	PPC___024root__Slow \
+	PPC___024root__DepSet_h5130b807__0__Slow \
 	PPC___024root__DepSet_h9fc841de__0__Slow \
 
 # Generated support classes, fast-path, compile with highest optimization

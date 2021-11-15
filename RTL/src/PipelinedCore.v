@@ -238,10 +238,12 @@ ImmGen ImmGenPPC(
 
 HazardDetection HazardDetectionPPC(
     .Instruction(IDInstruction),
-    .MemReadID(MemReadID),
     .MemReadEX(MemReadEX),
-    .BranchID(BranchID),
+    .RegWriteEX(RegWriteEX),
+    .MemRead(MemRead),
     .EXRd(EXRd),
+    .MEMRd(MEMRd),
+    .BranchID(BranchID),
     .PCSrc(PCSrc),
     .PCWrite(PCWrite),
     .IFIDWrite(IFIDWrite),

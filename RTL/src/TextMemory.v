@@ -15,13 +15,26 @@ begin
         0: data_out = 32'h00052503;
         1: data_out = 32'h0045a583;
         2: data_out = 32'h00b50633;
-        3: data_out = 32'h00c2a223;
+        3: data_out = 32'h00c2a423;
         4: data_out = 32'h02b60063;
         5: data_out = 32'h40b606b3;
         6: data_out = 32'h40d60633;
         7: data_out = 32'h00b60a63;
-        'h0C: data_out = 32'h00c6f6b3;
-        'h0D: data_out = 32'h00c6e733;
+        8: data_out = 32'h00000013;
+        9: data_out = 32'h00000013;
+        10: data_out = 32'h00000013;
+        11: data_out = 32'h00000013;
+        12: data_out = 32'h00c6f6b3;  //EQUAL
+        13: data_out = 32'h00c6e733;
+        14: data_out = 32'h0046a683;
+        15: data_out = 32'h00d70a63;
+        16: data_out = 32'h00000013;
+        17: data_out = 32'h00000013;
+        18: data_out = 32'h00000013;
+        19: data_out = 32'h00000013;
+        20: data_out = 32'h00d707b3;  //LWBRANCH
+
+
 
         default: data_out = 32'h00000000;
     endcase

@@ -15,6 +15,9 @@ display_help() {
 while getopts 'h,D:' args; do
     case "${args}" in
         D) defines=${OPTARG};;
+        h) display_help  # Call your function
+           exit 0
+           ;;
     esac
 done
 
