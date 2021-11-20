@@ -5,7 +5,7 @@ module HazardDetection(
     input           MemRead,    //BranchALU LOAD2
     input [4:0]     EXRd,
     input [4:0]     MEMRd,    
-    input           BranchID,   //Knows a Branch needs to be calculates in ID. Stall until 1.R-type op. is made in ALU and forward from EX/MEM 2.Load and stall 2 cycles and forward from MEMWB.
+    input           DoBranch,   //Knows a Branch needs to be calculates in ID. Stall until 1.R-type op. is made in ALU and forward from EX/MEM 2.Load and stall 2 cycles and forward from MEMWB.
     input           PCSrc,
     output reg      PCWrite,
     output reg      IFIDWrite,
@@ -24,8 +24,8 @@ always@(*)begin : StallingUnit
     //ALU Op. has to stall next inst. in ID then both move
     (MemReadEX && ((EXRd == Rs1) || (EXRd == Rs2))) ||                      //ALU Stall cause by Load. (Sequence: Stall and lw moves to MEM. Both move, and forward from MEM/WB to ALU)
     //Branch has to stall next inst. in ID but don't move next ClockCycle. 
-    (BranchID &&  RegWriteEX && ((EXRd == Rs1) || (EXRd == Rs2))) ||      //BranchALU R-TYPE Stall AND Load Stall 1   
-    (BranchID &&  MemRead && ((MEMRd == Rs1) || (MEMRd == Rs2)))            //BranchALU Load Stall 2 (Can't forward lw from EX/MEM)
+    (DoBranch &&  RegWriteEX && ((EXRd == Rs1) || (EXRd == Rs2))) ||      //BranchALU R-TYPE Stall AND Load Stall 1   
+    (DoBranch &&  MemRead && ((MEMRd == Rs1) || (MEMRd == Rs2)))            //BranchALU Load Stall 2 (Can't forward lw from EX/MEM)
     ) begin
         //Load Stall
         PCWrite = 0;

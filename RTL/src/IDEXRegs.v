@@ -4,7 +4,7 @@ module IDEXRegs(
     input en,
 
     //Inputs
-    //input [31:0]    writePC,     //32 or 64 bits
+    input [31:0]    writePC,     //32 or 64 bits
     input [31:0]    writeReadData1,
     input [31:0]    writeReadData2,
     input [31:0]    writeImmediate,
@@ -12,11 +12,12 @@ module IDEXRegs(
     input [4:0]     writeRs2,
     input [4:0]     writeRd,
     input           writeRegWrite,
-    input           writeMemtoReg,
-    //input           writeBranch,
+    input [1:0]     writeWriteDataSrc,
+    input [2:0]     writeStoreLoadSel,
     input           writeMemWrite,
     input           writeMemRead,
     input           writeALUSrc,
+    input [1:0]     writeLuiAuipcSel,
     input [4:0]     writeALUCtrl,
 
     //DEBUG
@@ -26,7 +27,7 @@ module IDEXRegs(
     `endif
     
     //Outputs
-    //output [31:0]   readPC,     //32 or 64 bits
+    output [31:0]   readPC,     //32 or 64 bits
     output [31:0]   readReadData1,
     output [31:0]   readReadData2,
     output [31:0]   readImmediate,
@@ -34,16 +35,17 @@ module IDEXRegs(
     output [4:0]    readRs2,
     output [4:0]    readRd,
     output          readRegWrite,
-    output          readMemtoReg,
-    //output          readBranch,
+    output [1:0]    readWriteDataSrc,
+    output [2:0]    readStoreLoadSel,
     output          readMemWrite,
     output          readMemRead,
     output          readALUSrc,
+    output [1:0]     readLuiAuipcSel,
     output [4:0]    readALUCtrl
 );
 
 // Datapath
-//reg [31:0]  regPC;
+reg [31:0]  regPC;
 reg [31:0]  regReadData1;
 reg [31:0]  regReadData2;
 reg [31:0]  regImmediate;
@@ -55,13 +57,14 @@ reg [4:0]   regRd;
 // Control
 //To WB
 reg regRegWrite;
-reg regMemtoReg;
+reg [1:0] regWriteDataSrc;
 //To MEM
-//reg regBranch;
+reg [2:0] regStoreLoadSel;
 reg regMemWrite;
 reg regMemRead;
 //To EX
 reg regALUSrc;
+reg[ 1:0] regLuiAuipcSel;
 reg [4:0] regALUCtrl;
 
 // Forwarding
@@ -71,17 +74,18 @@ reg [4:0]   regRs2;
 always @(posedge clk) begin : WriteRegs
     if (rst == 0) begin
         if (en == 1) begin
-            //regPC <= writePC;
+            regPC <= writePC;
             regReadData1 <= writeReadData1;
             regReadData2 <= writeReadData2;
             regImmediate <= writeImmediate;
             regRd <= writeRd;
             regRegWrite <= writeRegWrite;
-            regMemtoReg <= writeMemtoReg;
-            //regBranch <= writeBranch;
+            regWriteDataSrc <= writeWriteDataSrc;
+            regStoreLoadSel <= writeStoreLoadSel;
             regMemWrite <= writeMemWrite;
             regMemRead <= writeMemRead;
             regALUSrc <= writeALUSrc;
+            regLuiAuipcSel <= writeLuiAuipcSel;
             regALUCtrl <= writeALUCtrl;
             regRs1 <= writeRs1;
             regRs2 <= writeRs2;
@@ -90,17 +94,18 @@ always @(posedge clk) begin : WriteRegs
             `endif
         end
     end else begin
-        //regPC <= 0;
+        regPC <= 0;
         regReadData1 <= 0;
         regReadData2 <= 0;
         regImmediate <= 0;
         regRd <= 0;
         regRegWrite <= 0;
-        regMemtoReg <= 0;
-        //regBranch <= 0;
+        regWriteDataSrc <= 0;
+        regStoreLoadSel <= 0;
         regMemWrite <= 0;
         regMemRead <= 0;
         regALUSrc <= 0;
+        regLuiAuipcSel <= 0;
         regALUCtrl <= 0;
         regRs1 <= 0;
         regRs2 <= 0;
@@ -110,17 +115,18 @@ always @(posedge clk) begin : WriteRegs
     end
 end
 
-//assign readPC = regPC;
+assign readPC = regPC;
 assign readReadData1 = regReadData1;
 assign readReadData2 = regReadData2;
 assign readImmediate = regImmediate;
 assign readRd = regRd;
 assign readRegWrite = regRegWrite;
-assign readMemtoReg = regMemtoReg;
-//assign readBranch = regBranch;
+assign readWriteDataSrc = regWriteDataSrc;
+assign readStoreLoadSel = regStoreLoadSel;
 assign readMemWrite = regMemWrite;
 assign readMemRead = regMemRead;
 assign readALUSrc = regALUSrc;
+assign readLuiAuipcSel = regLuiAuipcSel;
 assign readALUCtrl = regALUCtrl;
 assign readRs1 = regRs1;
 assign readRs2 = regRs2;

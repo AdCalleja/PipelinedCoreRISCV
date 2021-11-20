@@ -3,11 +3,12 @@ module MEMWBRegs(
     input rst,
     input en,
     //Inputs
+    input [31:0]    writePC,
     input [31:0]    writeALUOutput,
     input [31:0]    writeDataOutput,
     input [4:0]     writeRd,
     input           writeRegWrite,
-    input           writeMemtoReg,
+    input [1:0]     writeWriteDataSrc,
 
     //DEBUG
     `ifdef DEBUGINSTRUCTION
@@ -16,54 +17,64 @@ module MEMWBRegs(
     `endif
 
     //Outputs
+    output [31:0]   readPC,
     output [31:0]    readALUOutput,
     output [31:0]    readDataOutput,
     output [4:0]     readRd,
     output           readRegWrite,
-    output           readMemtoReg
+    output [1:0]    readWriteDataSrc
 );
 
-//Datapath
+
+
+
+// Datapath
+reg [31:0]  regPC;
 reg [31:0]  regALUOutput;
 reg [31:0]  regDataOutput;
 reg [4:0]   regRd;
-reg         regRegWrite;
-reg         regMemtoReg;
 `ifdef DEBUGINSTRUCTION
     reg [31:0]  regInstruction;
 `endif
+
+// Control
+reg         regRegWrite;
+reg [1:0] regWriteDataSrc;
+
 
 
 always @(posedge clk) begin : WriteRegs
     if (rst == 0) begin
         if (en == 1) begin
+            regPC <= writePC;
             regALUOutput <= writeALUOutput;
             regDataOutput <= writeDataOutput;
             regRd <= writeRd;
             regRegWrite <= writeRegWrite;
-            regMemtoReg <= writeMemtoReg;
+            regWriteDataSrc <= writeWriteDataSrc;
             `ifdef DEBUGINSTRUCTION
                 regInstruction <= writeInstruction;
             `endif
         end
     end else begin
+        regPC <= 0;
         regALUOutput <= 0;
         regDataOutput <= 0;
         regRd <= 0;
         regRegWrite <= 0;
-        regMemtoReg <= 0;
+        regWriteDataSrc <= 0;
         `ifdef DEBUGINSTRUCTION
             regInstruction <= 0;
         `endif
 
     end
 end
-
+assign readPC = regPC;
 assign readALUOutput = regALUOutput;
 assign readDataOutput = regDataOutput;
 assign readRd = regRd;
 assign readRegWrite = regRegWrite;
-assign readMemtoReg = regMemtoReg;
+assign readWriteDataSrc = regWriteDataSrc;
 `ifdef DEBUGINSTRUCTION
     assign readInstruction = regInstruction;
 `endif

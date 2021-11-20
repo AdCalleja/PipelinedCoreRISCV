@@ -3,14 +3,14 @@ module EXMEMRegs(
     input rst,
     input en,
     //Inputs
-    //input [31:0]    writePCBranch,
+    input [31:0]    writePC,
     //input           writeZero,
     input [31:0]    writeALUOutput,
     input [31:0]    writeReadData2Forw,
     input [4:0]     writeRd,
     input           writeRegWrite,
-    input           writeMemtoReg,
-    //input           writeBranch,
+    input [1:0]     writeWriteDataSrc,
+    input [2:0]     writeStoreLoadSel,
     input           writeMemWrite,
     input           writeMemRead,
     
@@ -21,19 +21,23 @@ module EXMEMRegs(
     `endif
 
     //Outputs
-    //output [31:0]   readPCBranch,
+    output [31:0]   readPC,
     //output          readZero,
     output [31:0]   readALUOutput,
     output [31:0]   readReadData2Forw,
     output [4:0]    readRd,
     output          readRegWrite,
-    output          readMemtoReg,
-    //output          readBranch,
+    output [1:0]    readWriteDataSrc,
+    output [2:0]    readStoreLoadSel,
     output          readMemWrite,
     output          readMemRead
 );
+
+
+
+
 // Datapath
-//reg [31:0]   regPCBranch;
+reg [31:0]   regPC;
 //reg          regZero;
 reg [31:0]   regALUOutput;
 reg [31:0]   regReadData2Forw;
@@ -45,23 +49,23 @@ reg [4:0]    regRd;
 // Control
 //To WB
 reg regRegWrite;
-reg regMemtoReg;
+reg [1:0] regWriteDataSrc;
 //To MEM
-//reg regBranch;
+reg [2:0] regStoreLoadSel;
 reg regMemWrite;
 reg regMemRead;
 
 always @(posedge clk) begin : WriteRegs
     if (rst == 0) begin
         if (en == 1) begin
-            //regPCBranch <= writePCBranch;
+            regPC <= writePC;
             //regZero <= writeZero;
             regALUOutput <= writeALUOutput;
             regReadData2Forw <= writeReadData2Forw;
             regRd <= writeRd;
             regRegWrite <= writeRegWrite;
-            regMemtoReg <= writeMemtoReg;
-            //regBranch <= writeBranch;
+            regWriteDataSrc <= writeWriteDataSrc;
+            regStoreLoadSel <= writeStoreLoadSel;
             regMemWrite <= writeMemWrite;
             regMemRead <= writeMemRead;
             `ifdef DEBUGINSTRUCTION
@@ -70,14 +74,14 @@ always @(posedge clk) begin : WriteRegs
 
         end
     end else begin
-        //regPCBranch <= writePCBranch;
-        //regZero <= writeZero;
-        regALUOutput <= writeALUOutput;
-        regReadData2Forw <= writeReadData2Forw;
-        regRd <= writeRd;
+        regPC <= 0;
+        //regZero <= 0;
+        regALUOutput <= 0;
+        regReadData2Forw <= 0;
+        regRd <= 0;
         regRegWrite <= 0;
-        regMemtoReg <= 0;
-        //regBranch <= 0;
+        regWriteDataSrc <= 0;
+        regStoreLoadSel <= 0;
         regMemWrite <= 0;
         regMemRead <= 0;
         `ifdef DEBUGINSTRUCTION
@@ -87,14 +91,14 @@ always @(posedge clk) begin : WriteRegs
     end
 end
 
-//assign readPCBranch = regPCBranch;
+assign readPC = regPC;
 //assign readZero = regZero;
 assign readALUOutput = regALUOutput;
 assign readReadData2Forw = regReadData2Forw;
 assign readRd = regRd;
 assign readRegWrite = regRegWrite;
-assign readMemtoReg = regMemtoReg;
-//assign readBranch = regBranch;
+assign readWriteDataSrc = regWriteDataSrc;
+assign readStoreLoadSel = regStoreLoadSel;
 assign readMemWrite = regMemWrite;
 assign readMemRead = regMemRead;
 `ifdef DEBUGINSTRUCTION

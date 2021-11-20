@@ -20,7 +20,6 @@ reg [31:0] Iimm;
 //! Decode muxed select of the immediate format based on the opcode of the instruction
 always@(*)begin : FormatSelect
     Opcode = Instruction[6:2];
-
     case(Opcode)
     8: begin
         Simm = {{21{Instruction[31]}}, Instruction[30:25], Instruction[11:7]};

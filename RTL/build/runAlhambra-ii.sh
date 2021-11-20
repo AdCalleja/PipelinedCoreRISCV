@@ -31,7 +31,7 @@ echo 'RUNNING VERILATOR'
 verilator -Wall -cc ./../src/PipelinedCore.v --prefix PPC -I./../src/ -D${defines}=1
 #Synthesize
 echo 'RUNNING YOSYS'
-yosys -p "read_verilog -I./../src/ -D${defines}=1 ./../src/PipelinedCore.v; synth_ice40 -json hardware.json" -q #./../src/PipelinedCore.v
+yosys -p "read_verilog -I./../src/ -D${defines}=1 ./../src/PipelinedCore.v; synth_ice40 -json hardware.json" #-q #./../src/PipelinedCore.v
 #Place and Route
 echo 'RUNNING NEXTNPR'
 nextpnr-ice40 --hx4k --package tq144 --opt-timing --json hardware.json --asc hardware.asc --pcf ./../constrains/alhambra-ii_icestudio.pcf
