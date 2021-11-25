@@ -25,6 +25,7 @@ VL_INLINE_OPT void PPC___024root___sequent__TOP__2(PPC___024root* vlSelf) {
     // Init
     IData/*31:0*/ PipelinedCore__DOT__ALUA;
     IData/*31:0*/ PipelinedCore__DOT__ALUB;
+    IData/*31:0*/ PipelinedCore__DOT__LoadToFix;
     CData/*1:0*/ PipelinedCore__DOT__ForwardALUA;
     CData/*1:0*/ PipelinedCore__DOT__ForwardALUB;
     CData/*4:0*/ PipelinedCore__DOT__ImmGenPPC__DOT__Opcode;
@@ -35,9 +36,32 @@ VL_INLINE_OPT void PPC___024root___sequent__TOP__2(PPC___024root* vlSelf) {
     IData/*31:0*/ PipelinedCore__DOT__StoreLogicPPC__DOT__Half0;
     IData/*31:0*/ PipelinedCore__DOT__StoreLogicPPC__DOT__Half1;
     IData/*31:0*/ PipelinedCore__DOT__StoreLogicPPC__DOT__Word;
+    CData/*7:0*/ PipelinedCore__DOT__LoadLogicPPC__DOT__Byte0;
+    CData/*7:0*/ PipelinedCore__DOT__LoadLogicPPC__DOT__Byte1;
+    CData/*7:0*/ PipelinedCore__DOT__LoadLogicPPC__DOT__Byte2;
+    CData/*7:0*/ PipelinedCore__DOT__LoadLogicPPC__DOT__Byte3;
+    SData/*15:0*/ PipelinedCore__DOT__LoadLogicPPC__DOT__Half0;
+    SData/*15:0*/ PipelinedCore__DOT__LoadLogicPPC__DOT__Half1;
+    IData/*31:0*/ PipelinedCore__DOT__LoadLogicPPC__DOT__Word;
     CData/*7:0*/ __Vtableidx1;
     SData/*10:0*/ __Vtableidx2;
+    SData/*11:0*/ __Vdlyvdim0__PipelinedCore__DOT__DataMemoryPPC__DOT__ram0__DOT__mem__v0;
+    CData/*7:0*/ __Vdlyvval__PipelinedCore__DOT__DataMemoryPPC__DOT__ram0__DOT__mem__v0;
+    CData/*0:0*/ __Vdlyvset__PipelinedCore__DOT__DataMemoryPPC__DOT__ram0__DOT__mem__v0;
+    SData/*11:0*/ __Vdlyvdim0__PipelinedCore__DOT__DataMemoryPPC__DOT__ram1__DOT__mem__v0;
+    CData/*7:0*/ __Vdlyvval__PipelinedCore__DOT__DataMemoryPPC__DOT__ram1__DOT__mem__v0;
+    CData/*0:0*/ __Vdlyvset__PipelinedCore__DOT__DataMemoryPPC__DOT__ram1__DOT__mem__v0;
+    SData/*11:0*/ __Vdlyvdim0__PipelinedCore__DOT__DataMemoryPPC__DOT__ram2__DOT__mem__v0;
+    CData/*7:0*/ __Vdlyvval__PipelinedCore__DOT__DataMemoryPPC__DOT__ram2__DOT__mem__v0;
+    CData/*0:0*/ __Vdlyvset__PipelinedCore__DOT__DataMemoryPPC__DOT__ram2__DOT__mem__v0;
+    SData/*11:0*/ __Vdlyvdim0__PipelinedCore__DOT__DataMemoryPPC__DOT__ram3__DOT__mem__v0;
+    CData/*7:0*/ __Vdlyvval__PipelinedCore__DOT__DataMemoryPPC__DOT__ram3__DOT__mem__v0;
+    CData/*0:0*/ __Vdlyvset__PipelinedCore__DOT__DataMemoryPPC__DOT__ram3__DOT__mem__v0;
     // Body
+    __Vdlyvset__PipelinedCore__DOT__DataMemoryPPC__DOT__ram3__DOT__mem__v0 = 0U;
+    __Vdlyvset__PipelinedCore__DOT__DataMemoryPPC__DOT__ram2__DOT__mem__v0 = 0U;
+    __Vdlyvset__PipelinedCore__DOT__DataMemoryPPC__DOT__ram1__DOT__mem__v0 = 0U;
+    __Vdlyvset__PipelinedCore__DOT__DataMemoryPPC__DOT__ram0__DOT__mem__v0 = 0U;
     if (vlSelf->rst) {
         vlSelf->PipelinedCore__DOT__IDEXRegsPPC__DOT__regImmediate = 0U;
         vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regReadData2Forw = 0U;
@@ -58,18 +82,117 @@ VL_INLINE_OPT void PPC___024root___sequent__TOP__2(PPC___024root* vlSelf) {
     }
     vlSelf->PipelinedCore__DOT__IDEXRegsPPC__DOT__regALUSrc 
         = ((~ (IData)(vlSelf->rst)) & (IData)(vlSelf->PipelinedCore__DOT__ALUSrcID));
-    vlSelf->PipelinedCore__DOT__IDEXRegsPPC__DOT__regLuiAuipcSel 
-        = ((IData)(vlSelf->rst) ? 0U : (IData)(vlSelf->PipelinedCore__DOT__LuiAuipcSelID));
-    vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regMemWrite 
-        = ((~ (IData)(vlSelf->rst)) & (IData)(vlSelf->PipelinedCore__DOT__IDEXRegsPPC__DOT__regMemWrite));
     if (vlSelf->rst) {
+        vlSelf->PipelinedCore__DOT__IDEXRegsPPC__DOT__regLuiAuipcSel = 0U;
         vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regStoreLoadSel = 0U;
+    } else {
+        vlSelf->PipelinedCore__DOT__IDEXRegsPPC__DOT__regLuiAuipcSel 
+            = vlSelf->PipelinedCore__DOT__LuiAuipcSelID;
+        vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regStoreLoadSel 
+            = vlSelf->PipelinedCore__DOT__IDEXRegsPPC__DOT__regStoreLoadSel;
+    }
+    if (((IData)(vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regMemWrite) 
+         & ((IData)(vlSelf->PipelinedCore__DOT__MemoryByteSel) 
+            >> 3U))) {
+        vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__ram3__DOT____Vlvbound_h6b355003__0 
+            = (vlSelf->PipelinedCore__DOT__StoreFixed 
+               >> 0x18U);
+        if ((0x800U >= (0xfffU & (vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput 
+                                  >> 2U)))) {
+            __Vdlyvval__PipelinedCore__DOT__DataMemoryPPC__DOT__ram3__DOT__mem__v0 
+                = vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__ram3__DOT____Vlvbound_h6b355003__0;
+            __Vdlyvset__PipelinedCore__DOT__DataMemoryPPC__DOT__ram3__DOT__mem__v0 = 1U;
+            __Vdlyvdim0__PipelinedCore__DOT__DataMemoryPPC__DOT__ram3__DOT__mem__v0 
+                = (0xfffU & (vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput 
+                             >> 2U));
+        }
+    }
+    if (((IData)(vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regMemWrite) 
+         & ((IData)(vlSelf->PipelinedCore__DOT__MemoryByteSel) 
+            >> 2U))) {
+        vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__ram2__DOT____Vlvbound_h6b355003__0 
+            = (0xffU & (vlSelf->PipelinedCore__DOT__StoreFixed 
+                        >> 0x10U));
+        if ((0x800U >= (0xfffU & (vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput 
+                                  >> 2U)))) {
+            __Vdlyvval__PipelinedCore__DOT__DataMemoryPPC__DOT__ram2__DOT__mem__v0 
+                = vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__ram2__DOT____Vlvbound_h6b355003__0;
+            __Vdlyvset__PipelinedCore__DOT__DataMemoryPPC__DOT__ram2__DOT__mem__v0 = 1U;
+            __Vdlyvdim0__PipelinedCore__DOT__DataMemoryPPC__DOT__ram2__DOT__mem__v0 
+                = (0xfffU & (vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput 
+                             >> 2U));
+        }
+    }
+    if (((IData)(vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regMemWrite) 
+         & ((IData)(vlSelf->PipelinedCore__DOT__MemoryByteSel) 
+            >> 1U))) {
+        vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__ram1__DOT____Vlvbound_h6b355003__0 
+            = (0xffU & (vlSelf->PipelinedCore__DOT__StoreFixed 
+                        >> 8U));
+        if ((0x800U >= (0xfffU & (vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput 
+                                  >> 2U)))) {
+            __Vdlyvval__PipelinedCore__DOT__DataMemoryPPC__DOT__ram1__DOT__mem__v0 
+                = vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__ram1__DOT____Vlvbound_h6b355003__0;
+            __Vdlyvset__PipelinedCore__DOT__DataMemoryPPC__DOT__ram1__DOT__mem__v0 = 1U;
+            __Vdlyvdim0__PipelinedCore__DOT__DataMemoryPPC__DOT__ram1__DOT__mem__v0 
+                = (0xfffU & (vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput 
+                             >> 2U));
+        }
+    }
+    if (((IData)(vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regMemWrite) 
+         & (IData)(vlSelf->PipelinedCore__DOT__MemoryByteSel))) {
+        vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__ram0__DOT____Vlvbound_h6b355003__0 
+            = (0xffU & vlSelf->PipelinedCore__DOT__StoreFixed);
+        if ((0x800U >= (0xfffU & (vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput 
+                                  >> 2U)))) {
+            __Vdlyvval__PipelinedCore__DOT__DataMemoryPPC__DOT__ram0__DOT__mem__v0 
+                = vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__ram0__DOT____Vlvbound_h6b355003__0;
+            __Vdlyvset__PipelinedCore__DOT__DataMemoryPPC__DOT__ram0__DOT__mem__v0 = 1U;
+            __Vdlyvdim0__PipelinedCore__DOT__DataMemoryPPC__DOT__ram0__DOT__mem__v0 
+                = (0xfffU & (vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput 
+                             >> 2U));
+        }
+    }
+    if (((IData)(vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regMemRead) 
+         & ((IData)(vlSelf->PipelinedCore__DOT__MemoryByteSel) 
+            >> 3U))) {
+        vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT____Vcellout__ram3__DOUT 
+            = ((0x800U >= (0xfffU & (vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput 
+                                     >> 2U))) ? vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__ram3__DOT__mem
+               [(0xfffU & (vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput 
+                           >> 2U))] : 0U);
+    }
+    if (((IData)(vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regMemRead) 
+         & ((IData)(vlSelf->PipelinedCore__DOT__MemoryByteSel) 
+            >> 2U))) {
+        vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT____Vcellout__ram2__DOUT 
+            = ((0x800U >= (0xfffU & (vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput 
+                                     >> 2U))) ? vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__ram2__DOT__mem
+               [(0xfffU & (vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput 
+                           >> 2U))] : 0U);
+    }
+    if (((IData)(vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regMemRead) 
+         & ((IData)(vlSelf->PipelinedCore__DOT__MemoryByteSel) 
+            >> 1U))) {
+        vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT____Vcellout__ram1__DOUT 
+            = ((0x800U >= (0xfffU & (vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput 
+                                     >> 2U))) ? vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__ram1__DOT__mem
+               [(0xfffU & (vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput 
+                           >> 2U))] : 0U);
+    }
+    if (((IData)(vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regMemRead) 
+         & (IData)(vlSelf->PipelinedCore__DOT__MemoryByteSel))) {
+        vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT____Vcellout__ram0__DOUT 
+            = ((0x800U >= (0xfffU & (vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput 
+                                     >> 2U))) ? vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__ram0__DOT__mem
+               [(0xfffU & (vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput 
+                           >> 2U))] : 0U);
+    }
+    if (vlSelf->rst) {
         vlSelf->PipelinedCore__DOT__MEMWBRegsPPC__DOT__regDataOutput = 0U;
         vlSelf->PipelinedCore__DOT__MEMWBRegsPPC__DOT__regWriteDataSrc = 0U;
         vlSelf->PipelinedCore__DOT__MEMWBRegsPPC__DOT__regALUOutput = 0U;
     } else {
-        vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regStoreLoadSel 
-            = vlSelf->PipelinedCore__DOT__IDEXRegsPPC__DOT__regStoreLoadSel;
         vlSelf->PipelinedCore__DOT__MEMWBRegsPPC__DOT__regDataOutput 
             = vlSelf->PipelinedCore__DOT__DataOutput;
         vlSelf->PipelinedCore__DOT__MEMWBRegsPPC__DOT__regWriteDataSrc 
@@ -96,16 +219,37 @@ VL_INLINE_OPT void PPC___024root___sequent__TOP__2(PPC___024root* vlSelf) {
         vlSelf->PipelinedCore__DOT__MEMWBRegsPPC__DOT__regPC 
             = vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regPC;
     }
-    vlSelf->PipelinedCore__DOT__IDEXRegsPPC__DOT__regMemWrite 
-        = (1U & ((~ (IData)(vlSelf->rst)) & ((IData)(vlSelf->PipelinedCore__DOT__Stall)
-                                              ? 0U : (IData)(vlSelf->PipelinedCore__DOT__MemWriteIDtoStall))));
+    if (__Vdlyvset__PipelinedCore__DOT__DataMemoryPPC__DOT__ram3__DOT__mem__v0) {
+        vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__ram3__DOT__mem[__Vdlyvdim0__PipelinedCore__DOT__DataMemoryPPC__DOT__ram3__DOT__mem__v0] 
+            = __Vdlyvval__PipelinedCore__DOT__DataMemoryPPC__DOT__ram3__DOT__mem__v0;
+    }
+    if (__Vdlyvset__PipelinedCore__DOT__DataMemoryPPC__DOT__ram2__DOT__mem__v0) {
+        vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__ram2__DOT__mem[__Vdlyvdim0__PipelinedCore__DOT__DataMemoryPPC__DOT__ram2__DOT__mem__v0] 
+            = __Vdlyvval__PipelinedCore__DOT__DataMemoryPPC__DOT__ram2__DOT__mem__v0;
+    }
+    if (__Vdlyvset__PipelinedCore__DOT__DataMemoryPPC__DOT__ram1__DOT__mem__v0) {
+        vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__ram1__DOT__mem[__Vdlyvdim0__PipelinedCore__DOT__DataMemoryPPC__DOT__ram1__DOT__mem__v0] 
+            = __Vdlyvval__PipelinedCore__DOT__DataMemoryPPC__DOT__ram1__DOT__mem__v0;
+    }
+    if (__Vdlyvset__PipelinedCore__DOT__DataMemoryPPC__DOT__ram0__DOT__mem__v0) {
+        vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__ram0__DOT__mem[__Vdlyvdim0__PipelinedCore__DOT__DataMemoryPPC__DOT__ram0__DOT__mem__v0] 
+            = __Vdlyvval__PipelinedCore__DOT__DataMemoryPPC__DOT__ram0__DOT__mem__v0;
+    }
+    vlSelf->PipelinedCore__DOT__IDEXRegsPPC__DOT__regStoreLoadSel 
+        = ((IData)(vlSelf->rst) ? 0U : (IData)(vlSelf->PipelinedCore__DOT__StoreLoadSelID));
+    vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regMemWrite 
+        = ((~ (IData)(vlSelf->rst)) & (IData)(vlSelf->PipelinedCore__DOT__IDEXRegsPPC__DOT__regMemWrite));
+    PipelinedCore__DOT__LoadToFix = (((IData)(vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT____Vcellout__ram3__DOUT) 
+                                      << 0x18U) | (
+                                                   ((IData)(vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT____Vcellout__ram2__DOUT) 
+                                                    << 0x10U) 
+                                                   | (((IData)(vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT____Vcellout__ram1__DOUT) 
+                                                       << 8U) 
+                                                      | (IData)(vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT____Vcellout__ram0__DOUT))));
     if (vlSelf->rst) {
-        vlSelf->PipelinedCore__DOT__IDEXRegsPPC__DOT__regStoreLoadSel = 0U;
         vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regWriteDataSrc = 0U;
         vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput = 0U;
     } else {
-        vlSelf->PipelinedCore__DOT__IDEXRegsPPC__DOT__regStoreLoadSel 
-            = vlSelf->PipelinedCore__DOT__StoreLoadSelID;
         vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regWriteDataSrc 
             = vlSelf->PipelinedCore__DOT__IDEXRegsPPC__DOT__regWriteDataSrc;
         vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput 
@@ -153,6 +297,9 @@ VL_INLINE_OPT void PPC___024root___sequent__TOP__2(PPC___024root* vlSelf) {
                     | ((IData)((0U != (0x80808080U 
                                        & vlSelf->PipelinedCore__DOT__WriteData))) 
                        << 7U));
+    vlSelf->PipelinedCore__DOT__IDEXRegsPPC__DOT__regMemWrite 
+        = (1U & ((~ (IData)(vlSelf->rst)) & ((IData)(vlSelf->PipelinedCore__DOT__Stall)
+                                              ? 0U : (IData)(vlSelf->PipelinedCore__DOT__MemWriteIDtoStall))));
     vlSelf->PipelinedCore__DOT__IDEXRegsPPC__DOT__regWriteDataSrc 
         = ((IData)(vlSelf->rst) ? 0U : (IData)(vlSelf->PipelinedCore__DOT__WriteDataSrcID));
     vlSelf->PipelinedCore__DOT__MemoryByteSel = ((0U 
@@ -252,6 +399,65 @@ VL_INLINE_OPT void PPC___024root___sequent__TOP__2(PPC___024root* vlSelf) {
                                                    (3U 
                                                     & (IData)(vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regStoreLoadSel)))
                                                    ? PipelinedCore__DOT__StoreLogicPPC__DOT__Word
+                                                   : 0U);
+    }
+    PipelinedCore__DOT__LoadLogicPPC__DOT__Byte0 = 
+        (0xffU & PipelinedCore__DOT__LoadToFix);
+    PipelinedCore__DOT__LoadLogicPPC__DOT__Byte1 = 
+        (0xffU & (PipelinedCore__DOT__LoadToFix >> 8U));
+    PipelinedCore__DOT__LoadLogicPPC__DOT__Byte2 = 
+        (0xffU & (PipelinedCore__DOT__LoadToFix >> 0x10U));
+    PipelinedCore__DOT__LoadLogicPPC__DOT__Byte3 = 
+        (PipelinedCore__DOT__LoadToFix >> 0x18U);
+    PipelinedCore__DOT__LoadLogicPPC__DOT__Half0 = 
+        (0xffffU & PipelinedCore__DOT__LoadToFix);
+    PipelinedCore__DOT__LoadLogicPPC__DOT__Half1 = 
+        (PipelinedCore__DOT__LoadToFix >> 0x10U);
+    PipelinedCore__DOT__LoadLogicPPC__DOT__Word = PipelinedCore__DOT__LoadToFix;
+    if ((0U == (3U & (IData)(vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regStoreLoadSel)))) {
+        vlSelf->PipelinedCore__DOT__LoadLogicPPC__DOT__Byte 
+            = ((0U == (3U & vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput))
+                ? (IData)(PipelinedCore__DOT__LoadLogicPPC__DOT__Byte0)
+                : ((1U == (3U & vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput))
+                    ? (IData)(PipelinedCore__DOT__LoadLogicPPC__DOT__Byte1)
+                    : ((2U == (3U & vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput))
+                        ? (IData)(PipelinedCore__DOT__LoadLogicPPC__DOT__Byte2)
+                        : ((3U == (3U & vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput))
+                            ? (IData)(PipelinedCore__DOT__LoadLogicPPC__DOT__Byte3)
+                            : 0U))));
+        vlSelf->PipelinedCore__DOT__DataOutput = ((4U 
+                                                   & (IData)(vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regStoreLoadSel))
+                                                   ? (IData)(vlSelf->PipelinedCore__DOT__LoadLogicPPC__DOT__Byte)
+                                                   : 
+                                                  (((- (IData)(
+                                                               (1U 
+                                                                & ((IData)(vlSelf->PipelinedCore__DOT__LoadLogicPPC__DOT__Byte) 
+                                                                   >> 7U)))) 
+                                                    << 8U) 
+                                                   | (IData)(vlSelf->PipelinedCore__DOT__LoadLogicPPC__DOT__Byte)));
+    } else if ((1U == (3U & (IData)(vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regStoreLoadSel)))) {
+        vlSelf->PipelinedCore__DOT__LoadLogicPPC__DOT__Half 
+            = ((0U == (3U & vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput))
+                ? (IData)(PipelinedCore__DOT__LoadLogicPPC__DOT__Half0)
+                : ((2U == (3U & vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput))
+                    ? (IData)(PipelinedCore__DOT__LoadLogicPPC__DOT__Half1)
+                    : 0U));
+        vlSelf->PipelinedCore__DOT__DataOutput = ((4U 
+                                                   & (IData)(vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regStoreLoadSel))
+                                                   ? (IData)(vlSelf->PipelinedCore__DOT__LoadLogicPPC__DOT__Half)
+                                                   : 
+                                                  (((- (IData)(
+                                                               (1U 
+                                                                & ((IData)(vlSelf->PipelinedCore__DOT__LoadLogicPPC__DOT__Half) 
+                                                                   >> 0xfU)))) 
+                                                    << 0x10U) 
+                                                   | (IData)(vlSelf->PipelinedCore__DOT__LoadLogicPPC__DOT__Half)));
+    } else {
+        vlSelf->PipelinedCore__DOT__DataOutput = ((2U 
+                                                   == 
+                                                   (3U 
+                                                    & (IData)(vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regStoreLoadSel)))
+                                                   ? PipelinedCore__DOT__LoadLogicPPC__DOT__Word
                                                    : 0U);
     }
     vlSelf->PipelinedCore__DOT__IDEXRegsPPC__DOT__regPC 
@@ -668,108 +874,9 @@ VL_INLINE_OPT void PPC___024root___sequent__TOP__3(PPC___024root* vlSelf) {
     CData/*4:0*/ __Vdlyvdim0__PipelinedCore__DOT__RegisterFilePPC__DOT__bank__v32;
     IData/*31:0*/ __Vdlyvval__PipelinedCore__DOT__RegisterFilePPC__DOT__bank__v32;
     CData/*0:0*/ __Vdlyvset__PipelinedCore__DOT__RegisterFilePPC__DOT__bank__v32;
-    CData/*5:0*/ __Vdlyvdim0__PipelinedCore__DOT__DataMemoryPPC__DOT__ram2__v0;
-    CData/*7:0*/ __Vdlyvval__PipelinedCore__DOT__DataMemoryPPC__DOT__ram2__v0;
-    CData/*0:0*/ __Vdlyvset__PipelinedCore__DOT__DataMemoryPPC__DOT__ram2__v0;
-    CData/*5:0*/ __Vdlyvdim0__PipelinedCore__DOT__DataMemoryPPC__DOT__ram1__v0;
-    CData/*7:0*/ __Vdlyvval__PipelinedCore__DOT__DataMemoryPPC__DOT__ram1__v0;
-    CData/*0:0*/ __Vdlyvset__PipelinedCore__DOT__DataMemoryPPC__DOT__ram1__v0;
-    CData/*5:0*/ __Vdlyvdim0__PipelinedCore__DOT__DataMemoryPPC__DOT__ram0__v0;
-    CData/*7:0*/ __Vdlyvval__PipelinedCore__DOT__DataMemoryPPC__DOT__ram0__v0;
-    CData/*0:0*/ __Vdlyvset__PipelinedCore__DOT__DataMemoryPPC__DOT__ram0__v0;
-    CData/*5:0*/ __Vdlyvdim0__PipelinedCore__DOT__DataMemoryPPC__DOT__ram3__v0;
-    CData/*7:0*/ __Vdlyvval__PipelinedCore__DOT__DataMemoryPPC__DOT__ram3__v0;
-    CData/*0:0*/ __Vdlyvset__PipelinedCore__DOT__DataMemoryPPC__DOT__ram3__v0;
     // Body
-    __Vdlyvset__PipelinedCore__DOT__DataMemoryPPC__DOT__ram3__v0 = 0U;
-    __Vdlyvset__PipelinedCore__DOT__DataMemoryPPC__DOT__ram0__v0 = 0U;
-    __Vdlyvset__PipelinedCore__DOT__DataMemoryPPC__DOT__ram1__v0 = 0U;
-    __Vdlyvset__PipelinedCore__DOT__DataMemoryPPC__DOT__ram2__v0 = 0U;
     __Vdlyvset__PipelinedCore__DOT__RegisterFilePPC__DOT__bank__v0 = 0U;
     __Vdlyvset__PipelinedCore__DOT__RegisterFilePPC__DOT__bank__v32 = 0U;
-    if (vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regMemWrite) {
-        if ((8U & (IData)(vlSelf->PipelinedCore__DOT__MemoryByteSel))) {
-            vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT____Vlvbound_h8eae6cfb__0 
-                = (vlSelf->PipelinedCore__DOT__StoreFixed 
-                   >> 0x18U);
-            if ((0x20U >= (0x3fU & (vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput 
-                                    >> 2U)))) {
-                __Vdlyvval__PipelinedCore__DOT__DataMemoryPPC__DOT__ram3__v0 
-                    = vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT____Vlvbound_h8eae6cfb__0;
-                __Vdlyvset__PipelinedCore__DOT__DataMemoryPPC__DOT__ram3__v0 = 1U;
-                __Vdlyvdim0__PipelinedCore__DOT__DataMemoryPPC__DOT__ram3__v0 
-                    = (0x3fU & (vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput 
-                                >> 2U));
-            }
-        }
-        if ((1U & (IData)(vlSelf->PipelinedCore__DOT__MemoryByteSel))) {
-            vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT____Vlvbound_hafae85ae__0 
-                = (0xffU & vlSelf->PipelinedCore__DOT__StoreFixed);
-            if ((0x20U >= (0x3fU & (vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput 
-                                    >> 2U)))) {
-                __Vdlyvval__PipelinedCore__DOT__DataMemoryPPC__DOT__ram0__v0 
-                    = vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT____Vlvbound_hafae85ae__0;
-                __Vdlyvset__PipelinedCore__DOT__DataMemoryPPC__DOT__ram0__v0 = 1U;
-                __Vdlyvdim0__PipelinedCore__DOT__DataMemoryPPC__DOT__ram0__v0 
-                    = (0x3fU & (vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput 
-                                >> 2U));
-            }
-        }
-        if ((2U & (IData)(vlSelf->PipelinedCore__DOT__MemoryByteSel))) {
-            vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT____Vlvbound_hc7e062c0__0 
-                = (0xffU & (vlSelf->PipelinedCore__DOT__StoreFixed 
-                            >> 8U));
-            if ((0x20U >= (0x3fU & (vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput 
-                                    >> 2U)))) {
-                __Vdlyvval__PipelinedCore__DOT__DataMemoryPPC__DOT__ram1__v0 
-                    = vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT____Vlvbound_hc7e062c0__0;
-                __Vdlyvset__PipelinedCore__DOT__DataMemoryPPC__DOT__ram1__v0 = 1U;
-                __Vdlyvdim0__PipelinedCore__DOT__DataMemoryPPC__DOT__ram1__v0 
-                    = (0x3fU & (vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput 
-                                >> 2U));
-            }
-        }
-        if ((4U & (IData)(vlSelf->PipelinedCore__DOT__MemoryByteSel))) {
-            vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT____Vlvbound_h07f684dc__0 
-                = (0xffU & (vlSelf->PipelinedCore__DOT__StoreFixed 
-                            >> 0x10U));
-            if ((0x20U >= (0x3fU & (vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput 
-                                    >> 2U)))) {
-                __Vdlyvval__PipelinedCore__DOT__DataMemoryPPC__DOT__ram2__v0 
-                    = vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT____Vlvbound_h07f684dc__0;
-                __Vdlyvset__PipelinedCore__DOT__DataMemoryPPC__DOT__ram2__v0 = 1U;
-                __Vdlyvdim0__PipelinedCore__DOT__DataMemoryPPC__DOT__ram2__v0 
-                    = (0x3fU & (vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput 
-                                >> 2U));
-            }
-        }
-    }
-    if (vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regMemRead) {
-        vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__Byte3 
-            = ((8U & (IData)(vlSelf->PipelinedCore__DOT__MemoryByteSel))
-                ? ((0x20U >= (0x3fU & (vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput 
-                                       >> 2U))) ? vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__ram3
-                   [(0x3fU & (vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput 
-                              >> 2U))] : 0U) : 0U);
-        vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__Byte2 
-            = ((4U & (IData)(vlSelf->PipelinedCore__DOT__MemoryByteSel))
-                ? ((0x20U >= (0x3fU & (vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput 
-                                       >> 2U))) ? vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__ram2
-                   [(0x3fU & (vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput 
-                              >> 2U))] : 0U) : 0U);
-        vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__Byte1 
-            = ((2U & (IData)(vlSelf->PipelinedCore__DOT__MemoryByteSel))
-                ? ((0x20U >= (0x3fU & (vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput 
-                                       >> 2U))) ? vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__ram1
-                   [(0x3fU & (vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput 
-                              >> 2U))] : 0U) : 0U);
-        vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__Byte0 
-            = ((1U & (IData)(vlSelf->PipelinedCore__DOT__MemoryByteSel))
-                ? ((0x20U >= (0x3fU & (vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput 
-                                       >> 2U))) ? vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__ram0
-                   [(0x3fU & (vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput 
-                              >> 2U))] : 0U) : 0U);
-    }
     if (vlSelf->rst) {
         __Vdlyvset__PipelinedCore__DOT__RegisterFilePPC__DOT__bank__v0 = 1U;
     } else if (vlSelf->PipelinedCore__DOT__MEMWBRegsPPC__DOT__regRegWrite) {
@@ -780,22 +887,6 @@ VL_INLINE_OPT void PPC___024root___sequent__TOP__3(PPC___024root* vlSelf) {
             __Vdlyvdim0__PipelinedCore__DOT__RegisterFilePPC__DOT__bank__v32 
                 = vlSelf->PipelinedCore__DOT__MEMWBRegsPPC__DOT__regRd;
         }
-    }
-    if (__Vdlyvset__PipelinedCore__DOT__DataMemoryPPC__DOT__ram3__v0) {
-        vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__ram3[__Vdlyvdim0__PipelinedCore__DOT__DataMemoryPPC__DOT__ram3__v0] 
-            = __Vdlyvval__PipelinedCore__DOT__DataMemoryPPC__DOT__ram3__v0;
-    }
-    if (__Vdlyvset__PipelinedCore__DOT__DataMemoryPPC__DOT__ram2__v0) {
-        vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__ram2[__Vdlyvdim0__PipelinedCore__DOT__DataMemoryPPC__DOT__ram2__v0] 
-            = __Vdlyvval__PipelinedCore__DOT__DataMemoryPPC__DOT__ram2__v0;
-    }
-    if (__Vdlyvset__PipelinedCore__DOT__DataMemoryPPC__DOT__ram1__v0) {
-        vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__ram1[__Vdlyvdim0__PipelinedCore__DOT__DataMemoryPPC__DOT__ram1__v0] 
-            = __Vdlyvval__PipelinedCore__DOT__DataMemoryPPC__DOT__ram1__v0;
-    }
-    if (__Vdlyvset__PipelinedCore__DOT__DataMemoryPPC__DOT__ram0__v0) {
-        vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__ram0[__Vdlyvdim0__PipelinedCore__DOT__DataMemoryPPC__DOT__ram0__v0] 
-            = __Vdlyvval__PipelinedCore__DOT__DataMemoryPPC__DOT__ram0__v0;
     }
     if (__Vdlyvset__PipelinedCore__DOT__RegisterFilePPC__DOT__bank__v0) {
         vlSelf->PipelinedCore__DOT__RegisterFilePPC__DOT__bank[0U] = 0U;
@@ -835,13 +926,6 @@ VL_INLINE_OPT void PPC___024root___sequent__TOP__3(PPC___024root* vlSelf) {
         vlSelf->PipelinedCore__DOT__RegisterFilePPC__DOT__bank[__Vdlyvdim0__PipelinedCore__DOT__RegisterFilePPC__DOT__bank__v32] 
             = __Vdlyvval__PipelinedCore__DOT__RegisterFilePPC__DOT__bank__v32;
     }
-    vlSelf->PipelinedCore__DOT__LoadToFix = (((IData)(vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__Byte3) 
-                                              << 0x18U) 
-                                             | (((IData)(vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__Byte2) 
-                                                 << 0x10U) 
-                                                | (((IData)(vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__Byte1) 
-                                                    << 8U) 
-                                                   | (IData)(vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__Byte0))));
 }
 
 VL_INLINE_OPT void PPC___024root___multiclk__TOP__5(PPC___024root* vlSelf) {
@@ -851,13 +935,6 @@ VL_INLINE_OPT void PPC___024root___multiclk__TOP__5(PPC___024root* vlSelf) {
     // Init
     IData/*31:0*/ PipelinedCore__DOT__BranchA;
     IData/*31:0*/ PipelinedCore__DOT__BranchB;
-    CData/*7:0*/ PipelinedCore__DOT__LoadLogicPPC__DOT__Byte0;
-    CData/*7:0*/ PipelinedCore__DOT__LoadLogicPPC__DOT__Byte1;
-    CData/*7:0*/ PipelinedCore__DOT__LoadLogicPPC__DOT__Byte2;
-    CData/*7:0*/ PipelinedCore__DOT__LoadLogicPPC__DOT__Byte3;
-    SData/*15:0*/ PipelinedCore__DOT__LoadLogicPPC__DOT__Half0;
-    SData/*15:0*/ PipelinedCore__DOT__LoadLogicPPC__DOT__Half1;
-    IData/*31:0*/ PipelinedCore__DOT__LoadLogicPPC__DOT__Word;
     // Body
     vlSelf->PipelinedCore__DOT__ReadData2 = vlSelf->PipelinedCore__DOT__RegisterFilePPC__DOT__bank
         [(0x1fU & (vlSelf->PipelinedCore__DOT__IFIDRegsPPC__DOT__regInstruction 
@@ -865,67 +942,6 @@ VL_INLINE_OPT void PPC___024root___multiclk__TOP__5(PPC___024root* vlSelf) {
     vlSelf->PipelinedCore__DOT__ReadData1 = vlSelf->PipelinedCore__DOT__RegisterFilePPC__DOT__bank
         [(0x1fU & (vlSelf->PipelinedCore__DOT__IFIDRegsPPC__DOT__regInstruction 
                    >> 0xfU))];
-    PipelinedCore__DOT__LoadLogicPPC__DOT__Byte0 = 
-        (0xffU & vlSelf->PipelinedCore__DOT__LoadToFix);
-    PipelinedCore__DOT__LoadLogicPPC__DOT__Byte1 = 
-        (0xffU & (vlSelf->PipelinedCore__DOT__LoadToFix 
-                  >> 8U));
-    PipelinedCore__DOT__LoadLogicPPC__DOT__Byte2 = 
-        (0xffU & (vlSelf->PipelinedCore__DOT__LoadToFix 
-                  >> 0x10U));
-    PipelinedCore__DOT__LoadLogicPPC__DOT__Byte3 = 
-        (vlSelf->PipelinedCore__DOT__LoadToFix >> 0x18U);
-    PipelinedCore__DOT__LoadLogicPPC__DOT__Half0 = 
-        (0xffffU & vlSelf->PipelinedCore__DOT__LoadToFix);
-    PipelinedCore__DOT__LoadLogicPPC__DOT__Half1 = 
-        (vlSelf->PipelinedCore__DOT__LoadToFix >> 0x10U);
-    PipelinedCore__DOT__LoadLogicPPC__DOT__Word = vlSelf->PipelinedCore__DOT__LoadToFix;
-    if ((0U == (3U & (IData)(vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regStoreLoadSel)))) {
-        vlSelf->PipelinedCore__DOT__LoadLogicPPC__DOT__Byte 
-            = ((0U == (3U & vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput))
-                ? (IData)(PipelinedCore__DOT__LoadLogicPPC__DOT__Byte0)
-                : ((1U == (3U & vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput))
-                    ? (IData)(PipelinedCore__DOT__LoadLogicPPC__DOT__Byte1)
-                    : ((2U == (3U & vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput))
-                        ? (IData)(PipelinedCore__DOT__LoadLogicPPC__DOT__Byte2)
-                        : ((3U == (3U & vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput))
-                            ? (IData)(PipelinedCore__DOT__LoadLogicPPC__DOT__Byte3)
-                            : 0U))));
-        vlSelf->PipelinedCore__DOT__DataOutput = ((4U 
-                                                   & (IData)(vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regStoreLoadSel))
-                                                   ? (IData)(vlSelf->PipelinedCore__DOT__LoadLogicPPC__DOT__Byte)
-                                                   : 
-                                                  (((- (IData)(
-                                                               (1U 
-                                                                & ((IData)(vlSelf->PipelinedCore__DOT__LoadLogicPPC__DOT__Byte) 
-                                                                   >> 7U)))) 
-                                                    << 8U) 
-                                                   | (IData)(vlSelf->PipelinedCore__DOT__LoadLogicPPC__DOT__Byte)));
-    } else if ((1U == (3U & (IData)(vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regStoreLoadSel)))) {
-        vlSelf->PipelinedCore__DOT__LoadLogicPPC__DOT__Half 
-            = ((0U == (3U & vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput))
-                ? (IData)(PipelinedCore__DOT__LoadLogicPPC__DOT__Half0)
-                : ((2U == (3U & vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput))
-                    ? (IData)(PipelinedCore__DOT__LoadLogicPPC__DOT__Half1)
-                    : 0U));
-        vlSelf->PipelinedCore__DOT__DataOutput = ((4U 
-                                                   & (IData)(vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regStoreLoadSel))
-                                                   ? (IData)(vlSelf->PipelinedCore__DOT__LoadLogicPPC__DOT__Half)
-                                                   : 
-                                                  (((- (IData)(
-                                                               (1U 
-                                                                & ((IData)(vlSelf->PipelinedCore__DOT__LoadLogicPPC__DOT__Half) 
-                                                                   >> 0xfU)))) 
-                                                    << 0x10U) 
-                                                   | (IData)(vlSelf->PipelinedCore__DOT__LoadLogicPPC__DOT__Half)));
-    } else {
-        vlSelf->PipelinedCore__DOT__DataOutput = ((2U 
-                                                   == 
-                                                   (3U 
-                                                    & (IData)(vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regStoreLoadSel)))
-                                                   ? PipelinedCore__DOT__LoadLogicPPC__DOT__Word
-                                                   : 0U);
-    }
     PipelinedCore__DOT__BranchB = ((2U & (IData)(vlSelf->PipelinedCore__DOT__ForwardBranchB))
                                     ? ((1U & (IData)(vlSelf->PipelinedCore__DOT__ForwardBranchB))
                                         ? 0U : vlSelf->PipelinedCore__DOT__WriteData)

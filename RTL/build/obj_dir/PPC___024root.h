@@ -51,14 +51,14 @@ VL_MODULE(PPC___024root) {
         CData/*2:0*/ PipelinedCore__DOT__EXMEMRegsPPC__DOT__regStoreLoadSel;
         CData/*0:0*/ PipelinedCore__DOT__EXMEMRegsPPC__DOT__regMemWrite;
         CData/*0:0*/ PipelinedCore__DOT__EXMEMRegsPPC__DOT__regMemRead;
-        CData/*7:0*/ PipelinedCore__DOT__DataMemoryPPC__DOT__Byte0;
-        CData/*7:0*/ PipelinedCore__DOT__DataMemoryPPC__DOT__Byte1;
-        CData/*7:0*/ PipelinedCore__DOT__DataMemoryPPC__DOT__Byte2;
-        CData/*7:0*/ PipelinedCore__DOT__DataMemoryPPC__DOT__Byte3;
-        CData/*7:0*/ PipelinedCore__DOT__DataMemoryPPC__DOT____Vlvbound_hafae85ae__0;
-        CData/*7:0*/ PipelinedCore__DOT__DataMemoryPPC__DOT____Vlvbound_hc7e062c0__0;
-        CData/*7:0*/ PipelinedCore__DOT__DataMemoryPPC__DOT____Vlvbound_h07f684dc__0;
-        CData/*7:0*/ PipelinedCore__DOT__DataMemoryPPC__DOT____Vlvbound_h8eae6cfb__0;
+        CData/*7:0*/ PipelinedCore__DOT__DataMemoryPPC__DOT____Vcellout__ram0__DOUT;
+        CData/*7:0*/ PipelinedCore__DOT__DataMemoryPPC__DOT____Vcellout__ram1__DOUT;
+        CData/*7:0*/ PipelinedCore__DOT__DataMemoryPPC__DOT____Vcellout__ram2__DOUT;
+        CData/*7:0*/ PipelinedCore__DOT__DataMemoryPPC__DOT____Vcellout__ram3__DOUT;
+        CData/*7:0*/ PipelinedCore__DOT__DataMemoryPPC__DOT__ram0__DOT____Vlvbound_h6b355003__0;
+        CData/*7:0*/ PipelinedCore__DOT__DataMemoryPPC__DOT__ram1__DOT____Vlvbound_h6b355003__0;
+        CData/*7:0*/ PipelinedCore__DOT__DataMemoryPPC__DOT__ram2__DOT____Vlvbound_h6b355003__0;
+        CData/*7:0*/ PipelinedCore__DOT__DataMemoryPPC__DOT__ram3__DOT____Vlvbound_h6b355003__0;
         CData/*7:0*/ PipelinedCore__DOT__LoadLogicPPC__DOT__Byte;
         CData/*4:0*/ PipelinedCore__DOT__MEMWBRegsPPC__DOT__regRd;
         CData/*0:0*/ PipelinedCore__DOT__MEMWBRegsPPC__DOT__regRegWrite;
@@ -73,14 +73,13 @@ VL_MODULE(PPC___024root) {
         IData/*31:0*/ PipelinedCore__DOT__ReadData2Forw;
         IData/*31:0*/ PipelinedCore__DOT__ALUOutput;
         IData/*31:0*/ PipelinedCore__DOT__StoreFixed;
-        IData/*31:0*/ PipelinedCore__DOT__LoadToFix;
         IData/*31:0*/ PipelinedCore__DOT__DataOutput;
         IData/*31:0*/ PipelinedCore__DOT__WriteData;
         IData/*31:0*/ PipelinedCore__DOT__PCtemp;
         IData/*31:0*/ PipelinedCore__DOT__IFIDRegsPPC__DOT__regPC;
+        IData/*31:0*/ PipelinedCore__DOT__IFIDRegsPPC__DOT__regInstruction;
     };
     struct {
-        IData/*31:0*/ PipelinedCore__DOT__IFIDRegsPPC__DOT__regInstruction;
         IData/*31:0*/ PipelinedCore__DOT__ImmGenPPC__DOT__Simm;
         IData/*31:0*/ PipelinedCore__DOT__ImmGenPPC__DOT__Bimm;
         IData/*31:0*/ PipelinedCore__DOT__ImmGenPPC__DOT__Uimm;
@@ -99,10 +98,10 @@ VL_MODULE(PPC___024root) {
         IData/*31:0*/ PipelinedCore__DOT__MEMWBRegsPPC__DOT__regALUOutput;
         IData/*31:0*/ PipelinedCore__DOT__MEMWBRegsPPC__DOT__regDataOutput;
         VlUnpacked<IData/*31:0*/, 32> PipelinedCore__DOT__RegisterFilePPC__DOT__bank;
-        VlUnpacked<CData/*7:0*/, 33> PipelinedCore__DOT__DataMemoryPPC__DOT__ram0;
-        VlUnpacked<CData/*7:0*/, 33> PipelinedCore__DOT__DataMemoryPPC__DOT__ram1;
-        VlUnpacked<CData/*7:0*/, 33> PipelinedCore__DOT__DataMemoryPPC__DOT__ram2;
-        VlUnpacked<CData/*7:0*/, 33> PipelinedCore__DOT__DataMemoryPPC__DOT__ram3;
+        VlUnpacked<CData/*7:0*/, 2049> PipelinedCore__DOT__DataMemoryPPC__DOT__ram0__DOT__mem;
+        VlUnpacked<CData/*7:0*/, 2049> PipelinedCore__DOT__DataMemoryPPC__DOT__ram1__DOT__mem;
+        VlUnpacked<CData/*7:0*/, 2049> PipelinedCore__DOT__DataMemoryPPC__DOT__ram2__DOT__mem;
+        VlUnpacked<CData/*7:0*/, 2049> PipelinedCore__DOT__DataMemoryPPC__DOT__ram3__DOT__mem;
     };
 
     // INTERNAL VARIABLES

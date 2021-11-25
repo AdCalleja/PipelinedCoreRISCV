@@ -25,6 +25,7 @@ VL_ATTR_COLD void PPC___024root___settle__TOP__4(PPC___024root* vlSelf) {
     // Init
     IData/*31:0*/ PipelinedCore__DOT__ALUA;
     IData/*31:0*/ PipelinedCore__DOT__ALUB;
+    IData/*31:0*/ PipelinedCore__DOT__LoadToFix;
     IData/*31:0*/ PipelinedCore__DOT__BranchA;
     IData/*31:0*/ PipelinedCore__DOT__BranchB;
     CData/*1:0*/ PipelinedCore__DOT__ForwardALUA;
@@ -47,13 +48,13 @@ VL_ATTR_COLD void PPC___024root___settle__TOP__4(PPC___024root* vlSelf) {
     CData/*7:0*/ __Vtableidx1;
     SData/*10:0*/ __Vtableidx2;
     // Body
-    vlSelf->PipelinedCore__DOT__LoadToFix = (((IData)(vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__Byte3) 
-                                              << 0x18U) 
-                                             | (((IData)(vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__Byte2) 
-                                                 << 0x10U) 
-                                                | (((IData)(vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__Byte1) 
-                                                    << 8U) 
-                                                   | (IData)(vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__Byte0))));
+    PipelinedCore__DOT__LoadToFix = (((IData)(vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT____Vcellout__ram3__DOUT) 
+                                      << 0x18U) | (
+                                                   ((IData)(vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT____Vcellout__ram2__DOUT) 
+                                                    << 0x10U) 
+                                                   | (((IData)(vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT____Vcellout__ram1__DOUT) 
+                                                       << 8U) 
+                                                      | (IData)(vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT____Vcellout__ram0__DOUT))));
     vlSelf->PipelinedCore__DOT__WriteData = ((2U & (IData)(vlSelf->PipelinedCore__DOT__MEMWBRegsPPC__DOT__regWriteDataSrc))
                                               ? ((1U 
                                                   & (IData)(vlSelf->PipelinedCore__DOT__MEMWBRegsPPC__DOT__regWriteDataSrc))
@@ -342,20 +343,18 @@ VL_ATTR_COLD void PPC___024root___settle__TOP__4(PPC___024root* vlSelf) {
     vlSelf->PipelinedCore__DOT__ALUCtrlID = PPC__ConstPool__TABLE_h59e31b33_0
         [__Vtableidx2];
     PipelinedCore__DOT__LoadLogicPPC__DOT__Byte0 = 
-        (0xffU & vlSelf->PipelinedCore__DOT__LoadToFix);
+        (0xffU & PipelinedCore__DOT__LoadToFix);
     PipelinedCore__DOT__LoadLogicPPC__DOT__Byte1 = 
-        (0xffU & (vlSelf->PipelinedCore__DOT__LoadToFix 
-                  >> 8U));
+        (0xffU & (PipelinedCore__DOT__LoadToFix >> 8U));
     PipelinedCore__DOT__LoadLogicPPC__DOT__Byte2 = 
-        (0xffU & (vlSelf->PipelinedCore__DOT__LoadToFix 
-                  >> 0x10U));
+        (0xffU & (PipelinedCore__DOT__LoadToFix >> 0x10U));
     PipelinedCore__DOT__LoadLogicPPC__DOT__Byte3 = 
-        (vlSelf->PipelinedCore__DOT__LoadToFix >> 0x18U);
+        (PipelinedCore__DOT__LoadToFix >> 0x18U);
     PipelinedCore__DOT__LoadLogicPPC__DOT__Half0 = 
-        (0xffffU & vlSelf->PipelinedCore__DOT__LoadToFix);
+        (0xffffU & PipelinedCore__DOT__LoadToFix);
     PipelinedCore__DOT__LoadLogicPPC__DOT__Half1 = 
-        (vlSelf->PipelinedCore__DOT__LoadToFix >> 0x10U);
-    PipelinedCore__DOT__LoadLogicPPC__DOT__Word = vlSelf->PipelinedCore__DOT__LoadToFix;
+        (PipelinedCore__DOT__LoadToFix >> 0x10U);
+    PipelinedCore__DOT__LoadLogicPPC__DOT__Word = PipelinedCore__DOT__LoadToFix;
     if ((0U == (3U & (IData)(vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regStoreLoadSel)))) {
         vlSelf->PipelinedCore__DOT__LoadLogicPPC__DOT__Byte 
             = ((0U == (3U & vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regALUOutput))
@@ -711,7 +710,6 @@ VL_ATTR_COLD void PPC___024root___ctor_var_reset(PPC___024root* vlSelf) {
     vlSelf->PipelinedCore__DOT__ALUOutput = VL_RAND_RESET_I(32);
     vlSelf->PipelinedCore__DOT__MemoryByteSel = VL_RAND_RESET_I(4);
     vlSelf->PipelinedCore__DOT__StoreFixed = VL_RAND_RESET_I(32);
-    vlSelf->PipelinedCore__DOT__LoadToFix = VL_RAND_RESET_I(32);
     vlSelf->PipelinedCore__DOT__DataOutput = VL_RAND_RESET_I(32);
     vlSelf->PipelinedCore__DOT__WriteData = VL_RAND_RESET_I(32);
     vlSelf->PipelinedCore__DOT__PCSrc = VL_RAND_RESET_I(1);
@@ -767,26 +765,26 @@ VL_ATTR_COLD void PPC___024root___ctor_var_reset(PPC___024root* vlSelf) {
     vlSelf->PipelinedCore__DOT__EXMEMRegsPPC__DOT__regMemRead = VL_RAND_RESET_I(1);
     vlSelf->PipelinedCore__DOT__StoreLogicPPC__DOT__Byte = VL_RAND_RESET_I(32);
     vlSelf->PipelinedCore__DOT__StoreLogicPPC__DOT__Half = VL_RAND_RESET_I(32);
-    for (int __Vi0=0; __Vi0<33; ++__Vi0) {
-        vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__ram0[__Vi0] = VL_RAND_RESET_I(8);
+    vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT____Vcellout__ram0__DOUT = VL_RAND_RESET_I(8);
+    vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT____Vcellout__ram1__DOUT = VL_RAND_RESET_I(8);
+    vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT____Vcellout__ram2__DOUT = VL_RAND_RESET_I(8);
+    vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT____Vcellout__ram3__DOUT = VL_RAND_RESET_I(8);
+    for (int __Vi0=0; __Vi0<2049; ++__Vi0) {
+        vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__ram0__DOT__mem[__Vi0] = VL_RAND_RESET_I(8);
     }
-    for (int __Vi0=0; __Vi0<33; ++__Vi0) {
-        vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__ram1[__Vi0] = VL_RAND_RESET_I(8);
+    vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__ram0__DOT____Vlvbound_h6b355003__0 = VL_RAND_RESET_I(8);
+    for (int __Vi0=0; __Vi0<2049; ++__Vi0) {
+        vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__ram1__DOT__mem[__Vi0] = VL_RAND_RESET_I(8);
     }
-    for (int __Vi0=0; __Vi0<33; ++__Vi0) {
-        vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__ram2[__Vi0] = VL_RAND_RESET_I(8);
+    vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__ram1__DOT____Vlvbound_h6b355003__0 = VL_RAND_RESET_I(8);
+    for (int __Vi0=0; __Vi0<2049; ++__Vi0) {
+        vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__ram2__DOT__mem[__Vi0] = VL_RAND_RESET_I(8);
     }
-    for (int __Vi0=0; __Vi0<33; ++__Vi0) {
-        vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__ram3[__Vi0] = VL_RAND_RESET_I(8);
+    vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__ram2__DOT____Vlvbound_h6b355003__0 = VL_RAND_RESET_I(8);
+    for (int __Vi0=0; __Vi0<2049; ++__Vi0) {
+        vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__ram3__DOT__mem[__Vi0] = VL_RAND_RESET_I(8);
     }
-    vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__Byte0 = VL_RAND_RESET_I(8);
-    vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__Byte1 = VL_RAND_RESET_I(8);
-    vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__Byte2 = VL_RAND_RESET_I(8);
-    vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__Byte3 = VL_RAND_RESET_I(8);
-    vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT____Vlvbound_hafae85ae__0 = VL_RAND_RESET_I(8);
-    vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT____Vlvbound_hc7e062c0__0 = VL_RAND_RESET_I(8);
-    vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT____Vlvbound_h07f684dc__0 = VL_RAND_RESET_I(8);
-    vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT____Vlvbound_h8eae6cfb__0 = VL_RAND_RESET_I(8);
+    vlSelf->PipelinedCore__DOT__DataMemoryPPC__DOT__ram3__DOT____Vlvbound_h6b355003__0 = VL_RAND_RESET_I(8);
     vlSelf->PipelinedCore__DOT__LoadLogicPPC__DOT__Byte = VL_RAND_RESET_I(8);
     vlSelf->PipelinedCore__DOT__LoadLogicPPC__DOT__Half = VL_RAND_RESET_I(16);
     vlSelf->PipelinedCore__DOT__MEMWBRegsPPC__DOT__regPC = VL_RAND_RESET_I(32);

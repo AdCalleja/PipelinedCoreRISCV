@@ -2,7 +2,9 @@
 
  ## Logisim
 
-Working Basic instructions.
+Given the complexity of the control units implementation based on logic gates Logisim is used as a schematic enviroment with error notification.
+
+Data memory (RAM) is implemented as 4 byte-width blocks of depth 2<sup>addr_width-1</sup>.
 
 ### Diagrams
 
@@ -11,6 +13,9 @@ Top Level
 ![Top Level Diagram](images/topleveldiagram.png?raw=true "Top Level Diagram")
 
 ## RTL
+
+Working RV32I except Fence, Ecall and Ebreak.
+
 ## Testing
 To test the instructions implemented and debug the design the following assembly code has been written in [Ripes](https://github.com/mortbopet/Ripes), getting also the disassembly version of the code:
 

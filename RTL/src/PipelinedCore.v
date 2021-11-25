@@ -37,7 +37,10 @@ module PipelinedCore(
 
 // ----- PARAMETERS -----
 //parameter DATA_DATA_WITH = 8;
-parameter DATA_ADDR_WIDTH = 8;
+parameter DATA_ADDR_WIDTH = 14; 
+//Max addr width 14 -> [7:0]4*4096 
+//[1:0] select Byte from 0 to 3
+//[13:2] 2**12 Select 1 of 4096 dirs
 
 
 // ----- CLOCK -----
@@ -419,7 +422,7 @@ DataMemory #(
 )DataMemoryPPC(
     .clk(clk),
     .data_in(StoreFixed),
-    .addr(MEMALUOutput[DATA_ADDR_WIDTH-1:0]), //MEMALUOutput[5:2]
+    .addr(MEMALUOutput[DATA_ADDR_WIDTH-1:2]), //MEMALUOutput[5:2]
     .we(MemWrite),
     .re(MemRead),
     .MemoryByteSel(MemoryByteSel),
