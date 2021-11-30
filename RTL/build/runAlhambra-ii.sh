@@ -4,7 +4,7 @@ display_help() {
     echo
     echo "Delete old files, run verilator to check for errors/warnings and run Yosys NextNPR and Icepack-Iceprog"
     echo
-    echo "Usage: $0 [-D <BUTTON,SLOWCLK,DEBUGINSTRUCTION>]" >&2
+    echo "Usage: $0 [-D <BUTTON,SLOWCLOCK,DEBUGINSTRUCTION>]" >&2
     echo
     echo "   -h	Show help"
     echo "   -D,	Yosys verilog Define. <Parameter>=1 in verilog code"
