@@ -1,0 +1,50 @@
+[*]
+[*] GTKWave Analyzer v3.4.0 (w)1999-2022 BSI
+[*] Sun Nov 28 20:14:54 2021
+[*]
+[dumpfile] "/home/adrian/codigo/RISC-V/PipelinedCoreRISCV/RTL/sim/PipelinedCore_tb.vcd"
+[dumpfile_mtime] "Sun Nov 28 20:14:36 2021"
+[dumpfile_size] 85349
+[savefile] "/home/adrian/codigo/RISC-V/PipelinedCoreRISCV/RTL/sim/signals.gtkw"
+[timestart] 19
+[size] 1920 1001
+[pos] 5707 0
+*-2.888727 38 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] PipelinedCore_tb.
+[treeopen] PipelinedCore_tb.PPCTB.
+[treeopen] PipelinedCore_tb.PPCTB.DataMemoryPPC.
+[sst_width] 276
+[signals_width] 270
+[sst_expanded] 1
+[sst_vpaned_height] 402
+@28
+PipelinedCore_tb.original_clk
+PipelinedCore_tb.PPCTB.rst
+@22
+PipelinedCore_tb.PPCTB.PCNext[31:0]
+PipelinedCore_tb.PPCTB.PC[31:0]
+PipelinedCore_tb.PPCTB.Instruction[31:0]
+PipelinedCore_tb.PPCTB.IDInstruction[31:0]
+@28
+PipelinedCore_tb.PPCTB.Stall
+PipelinedCore_tb.PPCTB.BranchALUOutput
+PipelinedCore_tb.PPCTB.IFIDFlush
+@22
+PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[10][31:0]
+PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[11][31:0]
+PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[12][31:0]
+PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[13][31:0]
+PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[14][31:0]
+PipelinedCore_tb.PPCTB.RegisterFilePPC.\bank[15][31:0]
+PipelinedCore_tb.PPCTB.leds[7:0]
+PipelinedCore_tb.PPCTB.DataMemoryPPC.ram0.\mem[0][7:0]
+PipelinedCore_tb.PPCTB.DataMemoryPPC.ram1.\mem[0][7:0]
+PipelinedCore_tb.PPCTB.DataMemoryPPC.ram2.\mem[0][7:0]
+PipelinedCore_tb.PPCTB.DataMemoryPPC.ram3.\mem[0][7:0]
+PipelinedCore_tb.PPCTB.DataMemoryPPC.ram0.\mem[1][7:0]
+PipelinedCore_tb.PPCTB.DataMemoryPPC.ram1.\mem[1][7:0]
+PipelinedCore_tb.PPCTB.DataMemoryPPC.ram2.\mem[1][7:0]
+@23
+PipelinedCore_tb.PPCTB.DataMemoryPPC.ram3.\mem[1][7:0]
+[pattern_trace] 1
+[pattern_trace] 0

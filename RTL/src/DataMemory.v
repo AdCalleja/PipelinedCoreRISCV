@@ -1,7 +1,10 @@
-`include "bram.v"
+`include "bram0.v"
+`include "bram1.v"
+`include "bram2.v"
+`include "bram3.v"
 module DataMemory #(
-  parameter BYTE_WIDTH = 8,          //width of data bus
-  parameter ADDR_WIDTH = 8           //width of addresses buses
+  //parameter BYTE_WIDTH = 8,          //width of data bus
+  parameter ADDR_WIDTH = 14           //width of addresses buses
 )(
   input                     clk,   //clock signal
   input  [31:0]             data_in,   //[(BYTE_WIDTH-1):0] data_in,  //data to be written
@@ -12,7 +15,10 @@ module DataMemory #(
   output [31:0] data_out      //read data
 );
 
-bram #(
+//Defined independent BRAM modules to tell filedir without having to used a parameter
+//that leads to error because it uses the default one before.
+//That could be solved by using -defer in readverilog but create many problems also
+bram0 #(
   .ADDR_WIDTH(ADDR_WIDTH)
 )ram0(
   .CLK(clk),
@@ -23,9 +29,10 @@ bram #(
   .DIN(data_in[7:0]),
   .DOUT(data_out[7:0])
 );
-bram #(
+
+bram1 #(
   .ADDR_WIDTH(ADDR_WIDTH)
-) ram1(
+  ) ram1(
   .CLK(clk),
   .W_ADDR(addr),
   .R_ADDR(addr),
@@ -34,7 +41,7 @@ bram #(
   .DIN(data_in[15:8]),
   .DOUT(data_out[15:8])
 );
-bram #(
+bram2 #(
   .ADDR_WIDTH(ADDR_WIDTH)
 ) ram2(
   .CLK(clk),
@@ -45,7 +52,7 @@ bram #(
   .DIN(data_in[23:16]),
   .DOUT(data_out[23:16])
 );
-bram #(
+bram3 #(
   .ADDR_WIDTH(ADDR_WIDTH)
 ) ram3(
   .CLK(clk),

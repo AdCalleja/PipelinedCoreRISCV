@@ -16,13 +16,14 @@
 //-I/home/adrian/codigo/RISC-V/PipelinedCoreRISCV/RTL/src
 
 //`define BUTTON = 1
-//`define SLOWCLK = 1
+//`define SLOWCLOCK = 1
+//`define DEBUGINSTRUCTION = 1
 //Debouncer
 `ifdef BUTTON
     `include "Debouncer.v"
 `endif
 //SlowClock
-`ifdef SLOWCLK
+`ifdef SLOWCLOCK
     `include "SlowClock.v"
 `endif
 
@@ -36,7 +37,9 @@ module PipelinedCore(
 );
 
 // ----- PARAMETERS -----
-//parameter DATA_DATA_WITH = 8;
+//parameter TEXT_DATA_WIDTH = 32;
+parameter TEXT_ADDR_WIDTH = 12; 
+//parameter DATA_DATA_WIDTH = 8;
 parameter DATA_ADDR_WIDTH = 14; 
 //Max addr width 14 -> [7:0]4*4096 
 //[1:0] select Byte from 0 to 3
@@ -48,7 +51,7 @@ wire clk;
 
 `ifdef BUTTON
     Debouncer DebouncerPPC(.clk(original_clk), .btn(btn), .btn_out(clk));
-`elsif SLOWCLK
+`elsif SLOWCLOCK
      SlowClock SlowClockPPC(.clk(original_clk), .slow_clk(clk));
 `else
     assign clk = original_clk;
@@ -205,9 +208,11 @@ assign PCNext = (PCSrc) ? {PCTargetAddress[31:1],1'b0} : PCPlus4;
 
 // TEXT MEMORY
 //#(.ADDR_WIDTH(8)) 
-TextMemory TextMemoryPPC(
-    .addr(PC[9:2]), 
-    .data_out(Instruction)
+TextMemory #(
+    .ADDR_WIDTH(TEXT_ADDR_WIDTH)
+)TextMemoryPPC(
+    .R_ADDR(PC[13:2]), 
+    .DOUT (Instruction)
 );
 
 assign IFIDRst = rst | IFIDFlush;

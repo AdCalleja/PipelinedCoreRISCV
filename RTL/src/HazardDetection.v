@@ -27,11 +27,12 @@ always@(*)begin : StallingUnit
     (DoBranch &&  RegWriteEX && ((EXRd == Rs1) || (EXRd == Rs2))) ||      //BranchALU R-TYPE Stall AND Load Stall 1   
     (DoBranch &&  MemRead && ((MEMRd == Rs1) || (MEMRd == Rs2)))            //BranchALU Load Stall 2 (Can't forward lw from EX/MEM)
     ) begin
-        //Load Stall
+        //Stall
         PCWrite = 0;
         IFIDWrite = 0;
         Stall = 1;
     end else begin
+        //Un-Stall
         PCWrite = 1;
         IFIDWrite = 1;
         Stall = 0;
