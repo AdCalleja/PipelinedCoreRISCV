@@ -16,8 +16,10 @@ initial begin
 end
 
 //The Lattice FPGA i am using can't generate 32-bits wide BRAM
-assign DOUT = rom[R_ADDR];
-
+//assign DOUT = rom[R_ADDR];
+always@(*) begin
+  DOUT = rom[R_ADDR];
+end
 
 endmodule
 
