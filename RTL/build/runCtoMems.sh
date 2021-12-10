@@ -4,10 +4,11 @@ display_help() {
     echo
     echo "Compile C source and generate in ./output/ the source files for PipelinedCore."
     echo
-    echo "Usage: $0 <source.c>" >&2
+    echo "Usage: $0 -c <source.c>" >&2
     echo
     echo "   -h	Show help"
     echo "   -d,	Specify Text memory depth as 0x00001000 or 4096"
+    echo "   -c <source.c>	Specify source."
     echo
     # echo some stuff here for the -a or --add-options 
     exit 1

@@ -44,7 +44,7 @@ SlowClock:
 To compile and generate the memory files  [*runCtoMems.sh*](/RTL/build/runCtoMem.sh). It generates temporary files in */RTL/build/tmp/* and the memory files in  */RTL/build/output/*.
 
 ~~~bash
-./RTL/build/runCtoMems.sh <source.c>
+./RTL/build/runCtoMems.sh -c <source.c>
 ~~~
 
 Both *text* and and *data* memory are defined by default as 4096 x 32 but can be modified by changing the *addr* bus width in [*PipelinedCore.v*](/RTL/src/PipelinedCore.v).
