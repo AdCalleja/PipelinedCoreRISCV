@@ -11,32 +11,40 @@ Data memory (RAM) is implemented as 4 byte-width blocks of depth 2<sup>addr_widt
 ![Top Level Diagram](images/topleveldiagram.png?raw=true "Top Level Diagram")
 
 ## How to use
-***Warning:*** As the project is being currently modified may be some absolute paths.
-
 ### RTL synth and load of the bitstream to Alhambra-II.
 
 A simple bash script has been created to execute the generation of the RTL model with Yosys and NextPNR and load it to the Alhambra-II board, but it can be replicated to do it with other boards.
 [*Script*](/RTL/build/runAlhambra-ii.sh)
 
-Standard:
+#### Prerequisites
+Having installed ([OSS CAD SUITE](https://github.com/YosysHQ/oss-cad-suite-build)
+Rules for Alhambra-II (If this is your board)
 ~~~bash
-./RTL/build/runAlhambra-ii.sh
+sudo sh -c "echo 'ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6010", MODE="0660", GROUP="plugdev", TAG+="uaccess"' > /etc/udev/rules.d/53-lattice-ftdi.rules"
 ~~~
 
-Button:
+
+
+#### Standard Use:
+
+~~~bash
+./RTL/build/runAlhambra-ii.sh -I ./RTL/src/
+~~~
+
+#### Button:
 Button 1 (SW1) is used as clock.
 
 *Warning: to reset, Button 2 (SW2) must be pressed before Button 1 (SW1) as reset is designed to be synchronous*
 
 ~~~bash
-./RTL/build/runAlhambra-ii.sh -D BUTTON
+./RTL/build/runAlhambra-ii.sh -I ./RTL/src/ -D BUTTON
 ~~~
 
-SlowClock:
+#### SlowClock:
 1 Clock Cycle per second
 
 ~~~bash
-./RTL/build/runAlhambra-ii.sh -D SLOWCLOCK
+./RTL/build/runAlhambra-ii.sh -I ./RTL/src/ -D SLOWCLOCK
 ~~~
 
 ### Compilation and memory generation.
@@ -119,7 +127,5 @@ LWBRANCH:
 The code in hexadecimal is load to the instruction memory in Logisim. A copy of it is load in the file *textmemory*, same as a copy of the data memory in *datamemory*.
 
 The following Waveform show the result obtained in GTKWave and what caused the output *leds* used as a reference that the system is executing the correct instruction.
-![Waveform](images/TestASMLeds.png?raw=true "Waveform")
-
-After it, while adding RV32I instructions there where created more assembler test to ensure all instrucctions worked well.
+![Waveform](images/TestASMLeds.png?raw=true "Waveform")After it, while adding RV32I instructions there where created more assembler test to ensure all instrucctions worked well.
 
