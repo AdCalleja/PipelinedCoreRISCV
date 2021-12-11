@@ -10,7 +10,7 @@ module TextMemory #(        //width of data bus
 reg [(32-1):0] rom[2**ADDR_WIDTH-1:0];
 initial begin
   //$display(ramN);
-  $readmemh("/home/adrian/codigo/RISC-V/PipelinedCoreRISCV/RTL/build/output/text.txt", rom);
+  $readmemh("../build/output/text.txt", rom);
   //$dumpfile("PipelinedCore_tb.vcd");
   //for (idx = 0; idx < 10; idx = idx + 1) $dumpvars(0, mem[idx]);
 end
