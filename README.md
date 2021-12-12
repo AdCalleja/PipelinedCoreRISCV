@@ -17,8 +17,9 @@ A simple bash script has been created to execute the generation of the RTL model
 [*Script*](/RTL/build/runAlhambra-ii.sh)
 
 #### Prerequisites
-Having installed ([OSS CAD SUITE](https://github.com/YosysHQ/oss-cad-suite-build)
-Rules for Alhambra-II (If this is your board)
+Having installed [OSS CAD SUITE](https://github.com/YosysHQ/oss-cad-suite-build)
+Rules for Alhambra-II (If that is your board)
+
 ~~~bash
 sudo sh -c "echo 'ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6010", MODE="0660", GROUP="plugdev", TAG+="uaccess"' > /etc/udev/rules.d/53-lattice-ftdi.rules"
 ~~~
@@ -28,7 +29,7 @@ sudo sh -c "echo 'ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6010", MODE="0660"
 #### Standard Use:
 
 ~~~bash
-./RTL/build/runAlhambra-ii.sh -I ./RTL/src/
+./<downloaded location>/PipelinedCoreRICV/RTL/build/runAlhambra-ii.sh
 ~~~
 
 #### Button:
@@ -37,22 +38,22 @@ Button 1 (SW1) is used as clock.
 *Warning: to reset, Button 2 (SW2) must be pressed before Button 1 (SW1) as reset is designed to be synchronous*
 
 ~~~bash
-./RTL/build/runAlhambra-ii.sh -I ./RTL/src/ -D BUTTON
+./<downloaded location>/PipelinedCoreRICV/RTL/build/runAlhambra-ii.sh -D BUTTON
 ~~~
 
 #### SlowClock:
 1 Clock Cycle per second
 
 ~~~bash
-./RTL/build/runAlhambra-ii.sh -I ./RTL/src/ -D SLOWCLOCK
+./<downloaded location>/PipelinedCoreRICV/RTL/build/runAlhambra-ii.sh -D SLOWCLOCK
 ~~~
 
 ### Compilation and memory generation.
 
-To compile and generate the memory files  [*runCtoMems.sh*](/RTL/build/runCtoMem.sh). It generates temporary files in */RTL/build/tmp/* and the memory files in  */RTL/build/output/*.
+To compile and generate the memory files  [*runCtoMems.sh*](/RTL/build/runCtoMem.sh). It generates temporary files in *./RTL/build/tmp/* and the memory files in  *./RTL/build/output/*.
 
 ~~~bash
-./RTL/build/runCtoMems.sh -c <source.c>
+./<downloaded location>/PipelinedCoreRICV/RTL/build/runCtoMems.sh -c <source.c>
 ~~~
 
 Both *text* and and *data* memory are defined by default as 4096 x 32 but can be modified by changing the *addr* bus width in [*PipelinedCore.v*](/RTL/src/PipelinedCore.v).

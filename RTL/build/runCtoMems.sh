@@ -32,7 +32,10 @@ new_depth() {
 
 while getopts 'h,d:,c:' args; do
     case "${args}" in
-    	c)source=${OPTARG};;
+    	c)source=${OPTARG}
+    	name="$(basename -- $source)"
+    	echo 'Source name: '"$name"
+    	;;
         d)new_depth "${OPTARG}";;
         h)display_help  # Call your function
           exit 0
@@ -47,51 +50,54 @@ if [ $# -eq 0 ]; then
 fi
 
 # Obtain source name to generate files
-lenght=${#source}
-let lenght=lenght-2
-name=${source:0:lenght}
+#lenght=${#source}
+#let lenght=lenght-2
+#name= ${source:0:lenght}
 #echo 'Source name: '$name
 
+#Get path
+SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+
 # Create folder for compilation files
-if [ ! -d ./tmp ]; then
-  mkdir -p ./tmp;
+if [ ! -d $SCRIPTPATH/tmp ]; then
+  mkdir -p $SCRIPTPATH/tmp;
 else
-  rm -rf ./tmp/*
+  rm -rf $SCRIPTPATH/tmp/*
 fi
-if [ ! -d ./output ]; then
-  mkdir -p ./output;
+if [ ! -d $SCRIPTPATH/output ]; then
+  mkdir -p $SCRIPTPATH/output;
 else
-  rm -rf ./output/*
+  rm -rf $SCRIPTPATH/output/*
 fi
 
 #Copy the linker script with the modified depth
-sed "4s/.*/. = $depth; /" baselinker.ld > ./tmp/linker.ld
+sed "4s/.*/. = $depth; /" $SCRIPTPATH/baselinker.ld > $SCRIPTPATH/tmp/linker.ld
 
 # Compilation
-riscv64-unknown-elf-gcc -march=rv32i -mabi=ilp32 -mstrict-align -save-temps=obj -static -c $name.c -o ./tmp/$name.o
+riscv64-unknown-elf-gcc -march=rv32i -mabi=ilp32 -mstrict-align -save-temps=obj -static -c $source -o $SCRIPTPATH/tmp/$name.o
 # Link
-riscv64-unknown-elf-ld -m elf32lriscv -T ./tmp/linker.ld ./tmp/$name.o -o ./tmp/$name.elf
+riscv64-unknown-elf-ld -m elf32lriscv -T $SCRIPTPATH/tmp/linker.ld $SCRIPTPATH/tmp/$name.o -o $SCRIPTPATH/tmp/$name.elf
 # Linked ELF to bin
-riscv64-unknown-elf-objcopy -O binary ./tmp/$name.elf ./tmp/$name.bin
+riscv64-unknown-elf-objcopy -O binary $SCRIPTPATH/tmp/$name.elf $SCRIPTPATH/tmp/$name.bin
 # Text and Data memory
-hexdump -ve '1/4 "%08x\n"' -n $depth ./tmp/$name.bin | grep -v 00000000 > ./output/text.txt
-hexdump -ve '1/1 "%02x\n"' -s $depth ./tmp/$name.bin > ./tmp/$name.ram # 1 Byte
+hexdump -ve '1/4 "%08x\n"' -n $depth $SCRIPTPATH/tmp/$name.bin | grep -v 00000000 > $SCRIPTPATH/output/text.txt
+hexdump -ve '1/1 "%02x\n"' -s $depth $SCRIPTPATH/tmp/$name.bin > $SCRIPTPATH/tmp/$name.ram # 1 Byte
 
 # Generate 4 files for the 4*8 x depth
-input="./tmp/$name.ram"
+input="$SCRIPTPATH/tmp/$name.ram"
 counter=0
 while IFS= read -r line
 do
     if [ $counter -eq 4 ];then 
         let counter=0 
     fi
-    echo $line >> ./output/data$counter.txt
+    echo $line >> $SCRIPTPATH/output/data$counter.txt
     let counter=counter+1
 done < "$input"
 
 #Show the linked memory
 echo The memory is:
-hexdump ./tmp/$name.bin
+hexdump $SCRIPTPATH/tmp/$name.bin
 
 
 

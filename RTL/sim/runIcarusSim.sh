@@ -21,7 +21,9 @@ while getopts 'h,D:' args; do
     esac
 done
 
-rm *.vvp *.vcd 
-iverilog -o PipelinedCore.vvp -I ./../src -D${defines}=1 ./../src/PipelinedCore_bench.v
+rm *.vvp *.vcd
+SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+
+iverilog -o PipelinedCore.vvp -I $SCRIPTPATH/../src -D${defines}=1 $SCRIPTPATH/../src/PipelinedCore_bench.v
 vvp PipelinedCore.vvp
 gtkwave -a signals.gtkw PipelinedCore_tb.vcd
