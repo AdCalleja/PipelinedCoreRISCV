@@ -25,5 +25,5 @@ rm *.vvp *.vcd
 SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 
 iverilog -o PipelinedCore.vvp -I $SCRIPTPATH/../src -D${defines}=1 $SCRIPTPATH/../src/PipelinedCore_bench.v
-vvp PipelinedCore.vvp
-gtkwave -a signals.gtkw PipelinedCore_tb.vcd
+vvp $SCRIPTPATH/PipelinedCore.vvp
+gtkwave -a $SCRIPTPATH/signals.gtkw $SCRIPTPATH/PipelinedCore_tb.vcd
