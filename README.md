@@ -17,8 +17,11 @@ A simple bash script has been created to execute the generation of the RTL model
 [*Script*](/RTL/build/runAlhambra-ii.sh)
 
 #### Prerequisites
-Having installed [OSS CAD SUITE](https://github.com/YosysHQ/oss-cad-suite-build)
-Rules for Alhambra-II (If that is your board)
+Having installed [OSS CAD SUITE](https://github.com/YosysHQ/oss-cad-suite-build).
+
+Having installed RISC-V toolchain.
+
+Rules for Alhambra-II (If that is your board):
 
 ~~~bash
 sudo sh -c "echo 'ATTRS{idVendor}=="0403", ATTRS{idProduct}=="6010", MODE="0660", GROUP="plugdev", TAG+="uaccess"' > /etc/udev/rules.d/53-lattice-ftdi.rules"
@@ -66,7 +69,7 @@ parameter DATA_ADDR_WIDTH = 14; //Max addr width 14 -> [7:0]4*4096 //[1:0] selec
 and using the -d flag of runCtoMems.sh
 
 ~~~bash
-./RTL/build/runCtoMems.sh -d 4096 -c <source.c>
+/<downloaded location>/PipelinedCoreRICV/RTL/build/runCtoMems.sh -d 4096 -c <source.c>
 ~~~
 
 ### Simulating.
@@ -74,7 +77,7 @@ and using the -d flag of runCtoMems.sh
 To simulate with icarus and GTKWave using  [*PipelinedCore_bench.v*](/RTL/src/PipelinedCore_bench.v) the following script can be used:
 
 ~~~bash
-./RTL/sim/runIcarusSim.sh [-D <BUTTON,SLOWCLOCK,DEBUGINSTRUCTION>]
+/<downloaded location>/PipelinedCoreRICV/RTL/sim/runIcarusSim.sh [-D <BUTTON,SLOWCLOCK,DEBUGINSTRUCTION>]
 ~~~
 
 (*DEBUGINSTRUCTION* propagate along all pipeline regs the instruction. It was used clarify while debugging what was the instruction in every step of the Pipeline)

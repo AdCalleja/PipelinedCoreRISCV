@@ -1,4 +1,8 @@
 #!/bin/bash
+#Get path
+SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
+#Clean
+rm $SCRIPTPATH/*.vvp $SCRIPTPATH/*.vcd 
 
 display_help() {
     echo
@@ -20,9 +24,6 @@ while getopts 'h,D:' args; do
            ;;
     esac
 done
-
-rm *.vvp *.vcd
-SCRIPTPATH="$( cd -- "$(dirname "$0")" >/dev/null 2>&1 ; pwd -P )"
 
 iverilog -o PipelinedCore.vvp -I $SCRIPTPATH/../src -D${defines}=1 $SCRIPTPATH/../src/PipelinedCore_bench.v
 vvp $SCRIPTPATH/PipelinedCore.vvp
